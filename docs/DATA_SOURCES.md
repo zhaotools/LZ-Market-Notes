@@ -20,6 +20,8 @@
 
 公众号二维码来自用户提供的 `IMG_1450.JPG`，原样保存为 `assets/wechat-qr.jpg`，尺寸 430×430，SHA-256 为 `0b186f8859ec8f064908d214450ef1e10ade8d72bb3389fd057b5683b693e43a`。
 
+“老赵市场笔记”为个人订阅号，不能使用微信官方发布列表 API。项目提供 `scripts/sync-wechat.mjs` 作为可替换 RSS/Atom 连接器：Feed URL 仅从 GitHub Actions Secret `WECHAT_FEED_URL` 读取，返回条目必须包含 HTTPS 的 `mp.weixin.qq.com` 原文链接、标题和有效发布日期。连接器只保留目录摘要，不保存 Feed 凭据或文章正文；Feed 缺失、失效或账号名称不匹配时保留上一版数据。
+
 YouTube 已核验 `@lzmarketwatch` 对应频道“老赵市场观察”，频道 ID 为 `UCSk0Q0f1xvfyRQCxiFlfNWg`。`data/videos.json` 来自 YouTube 官方公开 RSS 最近目录；5 个原视频页面、缩略图和 oEmbed 在 2026-09-10 联网检查时均返回 HTTP 200。
 
 ## Map 公开快照
@@ -55,7 +57,7 @@ https://github.com/zhaotools/LZ-Market-Toolkit/blob/main/index.html
 GitHub Pages 工作流参考通过 GitHub 连接器读取的官方模板：
 https://github.com/actions/starter-workflows/blob/main/pages/static.yml
 
-工作流依次构建、测试并运行 `release:check`，通过后只上传 `site/`。2026-09-10 已按各 Action 官方最新稳定主版本更新为 checkout@v7、setup-node@v7、configure-pages@v6、upload-pages-artifact@v5 与 deploy-pages@v5。
+工作流在北京时间 09:17 和 21:17 自动检查 YouTube RSS、Map 公开快照和已配置的公众号 Feed。只有实际内容变化才提交 `data/`、`site/` 与 `preview.html`；随后在同一次运行内完成 Pages 部署，避免依赖机器人提交再次触发工作流。同步后依次构建、测试并运行 `release:check`，通过后只上传 `site/`。2026-09-10 已按各 Action 官方最新稳定主版本更新为 checkout@v7、setup-node@v7、configure-pages@v6、upload-pages-artifact@v5 与 deploy-pages@v5。
 
 无密钥路径采用 YouTube 官方公开 RSS：
 https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg

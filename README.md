@@ -55,6 +55,7 @@ npm test            # 数据、转义、安全边界与模板测试
 npm run preview     # 预览已生成的 site/
 npm run sync:market # 同步 Map 的公开 global 快照
 npm run sync:youtube # 无密钥同步官方 RSS；有密钥时同步完整 Data API 目录
+npm run sync:wechat # 从已配置的第三方 RSS/Atom Feed 同步公众号目录
 npm run import:articles -- /绝对路径/articles.json # 导入已人工核验的公众号目录
 npm run release:check  # 检查正式 URL、二维码和全部内容发布状态
 ```
@@ -72,6 +73,7 @@ scripts/serve.mjs            本地静态服务器
 scripts/import-articles.mjs  公众号文章元数据人工导入与严格校验
 scripts/sync-market.mjs      已联调的 Map 公开 global 快照同步脚本
 scripts/sync-youtube.mjs     YouTube 官方 RSS / Data API 双路径同步脚本
+scripts/sync-wechat.mjs      个人订阅号的可替换 RSS/Atom 目录连接器
 scripts/release-check.mjs    正式发布检查
  data/site.json              品牌、外链、公众号名称、预览状态
  data/articles.json          文章目录
@@ -91,11 +93,13 @@ Map 可以运行 `npm run sync:market`。脚本只尝试公开 JSON，校验 `gl
 
 直接运行 `npm run sync:youtube` 会按 `site.json` 中已核验的频道 ID 读取 YouTube 官方 RSS，适合无密钥更新最近公开视频。提供 `YOUTUBE_API_KEY` 后，脚本改用 Data API 分页读取完整公开目录，并补充时长与嵌入权限。密钥不会进入前端、日志或构建输出；获取失败不会清空现有目录。同步后仍应人工核验分类。
 
-当前部署工作流**只发布仓库内已审核的数据**，不自动抓取，也没有定时任务。后续由 Codex 按明确的更新策略接入同步、数据持久化和失败通知，不要仅在临时构建目录更新后任由下一次部署回退到旧数据。
+个人订阅号没有微信官方“获取已发布文章列表”接口权限。`npm run sync:wechat` 从 GitHub Actions Secret `WECHAT_FEED_URL` 读取一次性配置的第三方 RSS/Atom Feed，只接受 `mp.weixin.qq.com` 原文链接并合并到已有目录；Feed URL、登录信息与文章正文都不会写入仓库或网站。未配置 Feed 时保留现有文章快照。
+
+GitHub Actions 每天北京时间 09:17 和 21:17 自动同步 YouTube RSS、Map 公开快照和已配置的公众号 Feed。同步脚本只有在目录或上游快照发生实际变化时才改写文件；通过构建、测试和正式发布检查后，工作流提交 `data/` 与对应生成页面，并在同一次运行中部署 Pages。任一来源失败时不会清空已有内容，也不会发布未经验证的结果。
 
 ## GitHub Pages 发布准备
 
-仓库准备好后，选择 GitHub Actions 作为 Pages 发布来源。当前工作流面向 `main` 分支，依次执行构建、测试和 `release:check`，全部通过后才上传 `site/`；开发说明、测试目录和本地环境文件不会作为网站发布。
+仓库使用 GitHub Actions 作为 Pages 发布来源。工作流响应 `main` 推送，也按计划同步公开内容；依次执行同步、构建、测试和 `release:check`，全部通过后才上传 `site/`。定时任务仅在公开内容确有变化时提交和部署；开发说明、测试目录、Feed URL 与本地环境文件不会作为网站发布。
 
 所有站内链接和静态资源均采用相对路径，适用于用户根站或项目子路径。`site.json` 的 `baseUrl` 需按最终 HTTPS 地址填写，不预设根站一定空闲，也不覆盖现有两个项目。
 

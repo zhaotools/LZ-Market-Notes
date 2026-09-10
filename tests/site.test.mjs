@@ -7,6 +7,7 @@ import {readJSON,validateMarket,validateContent,esc,safeURL,safeAssetPath,root} 
 import {renderers,pageHTML} from '../scripts/templates.mjs';
 import {normalizeMarket} from '../scripts/sync-market.mjs';
 import {inferCategory,parseYoutubeFeed} from '../scripts/sync-youtube.mjs';
+import {inferArticleCategory,parseWechatFeed} from '../scripts/sync-wechat.mjs';
 import {normalizeArticleImport} from '../scripts/import-articles.mjs';
 const data=JSON.parse(await readFile(resolve(root,'tests/fixtures/demo.json'),'utf8'));
 const current={site:await readJSON('site.json'),articles:await readJSON('articles.json'),videos:await readJSON('videos.json'),market:await readJSON('market.json')};
@@ -81,6 +82,20 @@ test('official YouTube RSS entries are channel-bound and normalized',()=>{
  const next=parseYoutubeFeed(xml,site,{items:[]},{syncedAt:'2026-09-10T08:00:00.000Z'});
  assert.equal(next.items[0].title,'比特币黄金交叉 & 短期节奏');assert.equal(next.items[0].status,'published');assert.match(next.items[0].thumbnail,/i\.ytimg\.com/);
  assert.throws(()=>parseYoutubeFeed(xml.replace('UCSk0Q0f1xvfyRQCxiFlfNWg','UCwrongwrongwrongwrong12'),site,{items:[]}));
+});
+test('YouTube RSS is capped at the latest five entries',()=>{
+ const entries=Array.from({length:6},(_,i)=>`<entry><yt:videoId>vid0000000${i}</yt:videoId><yt:channelId>UCSk0Q0f1xvfyRQCxiFlfNWg</yt:channelId><title>视频 ${i}</title><published>2026-09-${String(10-i).padStart(2,'0')}T07:31:57+00:00</published></entry>`).join('');
+ const next=parseYoutubeFeed(`<feed><title>老赵市场观察</title>${entries}</feed>`,{youtubeChannelId:'UCSk0Q0f1xvfyRQCxiFlfNWg',youtubeChannelTitle:'老赵市场观察'},{items:[]});
+ assert.equal(next.items.length,5);
+});
+test('WeChat RSS connector keeps only verified original links and no article bodies',()=>{
+ const xml=`<rss><channel><title>老赵市场笔记</title><item><title><![CDATA[AI 与投资系统]]></title><link>https://mp.weixin.qq.com/s/new-article</link><pubDate>Thu, 10 Sep 2026 16:30:00 GMT</pubDate><description><![CDATA[<p>只保存目录摘要。</p>]]></description><content:encoded><![CDATA[<p>正文不应保存</p>]]></content:encoded></item></channel></rss>`;
+ const next=parseWechatFeed(xml,{wechatName:'老赵市场笔记'},{items:[]},{syncedAt:'2026-09-11T00:30:00.000Z'});
+ assert.equal(next.items.length,1);assert.equal(next.items[0].date,'2026-09-11');assert.equal(next.items[0].category,'AI 实践');
+ assert.equal(next.items[0].summary,'只保存目录摘要。');assert.equal(next.items[0].body,undefined);assert.equal(next.items[0].status,'published');
+ assert.equal(next.status,'synced-rss-connector');assert.equal(inferArticleCategory('全球市场周观察'),'市场观察');
+ assert.throws(()=>parseWechatFeed(xml.replace('老赵市场笔记','其他公众号'),{wechatName:'老赵市场笔记'},{items:[]}),/title did not match/);
+ assert.throws(()=>parseWechatFeed(xml.replace('https://mp.weixin.qq.com/s/new-article','https://example.com/article'),{wechatName:'老赵市场笔记'},{items:[]}),/no valid/);
 });
 test('manual article import requires verified original URLs and never copies bodies',()=>{
  const incoming=[{id:'verified-one',category:'投资方法',title:'核验文章',summary:'经人工核验的目录摘要。',date:'2026-09-10',url:'https://mp.weixin.qq.com/s/example',tags:['方法'],body:'do not copy'}];

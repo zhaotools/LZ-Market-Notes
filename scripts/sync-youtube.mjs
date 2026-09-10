@@ -16,7 +16,7 @@ const decodeXML=value=>String(value||'').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'
 const tag=(block,name)=>decodeXML(block.match(new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${name}>`))?.[1]||'').replace(/<[^>]+>/g,'').trim();
 const compact=value=>String(value||'').replace(/\s+/g,' ').trim();
 export function parseYoutubeFeed(xml,site,previous,{syncedAt=new Date().toISOString()}={}){
- const entries=[...String(xml).matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(x=>x[1]);
+ const entries=[...String(xml).matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(x=>x[1]).slice(0,5);
  if(!entries.length)throw new Error('YouTube RSS feed returned no public videos; existing data preserved.');
  const withoutEntries=String(xml).replace(/<entry>[\s\S]*?<\/entry>/g,'');
  const channelTitle=tag(withoutEntries,'title');
@@ -47,8 +47,13 @@ async function syncYoutubeRSS(site,previous){
   try{({stdout:xml}=await execFileAsync('curl',['-L','--fail','--silent','--show-error','--max-time','20',source],{encoding:'utf8',maxBuffer:5*1024*1024}));}
   catch{throw new Error('YouTube RSS request failed; videos.json was preserved.');}
  }
- const next=parseYoutubeFeed(xml,site,previous);await atomicJSON(resolve(root,'data/videos.json'),next);
+ const next=parseYoutubeFeed(xml,site,previous);
+ if(JSON.stringify(previous)===JSON.stringify({...next,lastSyncedAt:previous.lastSyncedAt})){
+  console.log('YouTube latest-five directory is unchanged.');return {changed:false};
+ }
+ await atomicJSON(resolve(root,'data/videos.json'),next);
  console.log(`Saved ${next.items.length} latest public videos. Source: YouTube official RSS.`);
+ return {changed:true};
 }
 async function syncYoutubeAPI(site,previous,key){
  const api=async(endpoint,params)=>{
@@ -88,8 +93,13 @@ async function syncYoutubeAPI(site,previous,key){
  items.sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
  const next={schemaVersion:1,status:'synced-public-directory',lastSyncedAt:new Date().toISOString(),channelId:info.id,
   channelTitle:info.snippet?.title||null,note:'通过 YouTube Data API 同步公开视频。分类是可编辑的规则归类，不是 YouTube 官方分类。',items};
- validateContent(next,'videos');await atomicJSON(resolve(root,'data/videos.json'),next);
+ validateContent(next,'videos');
+ if(JSON.stringify(previous)===JSON.stringify({...next,lastSyncedAt:previous.lastSyncedAt})){
+  console.log('YouTube public directory is unchanged.');return {changed:false};
+ }
+ await atomicJSON(resolve(root,'data/videos.json'),next);
  console.log(`Saved ${items.length} public videos. Source: YouTube Data API.`);
+ return {changed:true};
 }
 export async function syncYoutube(){
  const site=await readJSON('site.json'),previous=await readJSON('videos.json'),key=process.env.YOUTUBE_API_KEY;

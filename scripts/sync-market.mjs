@@ -30,8 +30,13 @@ export async function syncMarket(){
  for(const source of SOURCES){try{next=normalizeMarket(await fetchJSON(source),source);break;}catch{console.warn('A public source could not be read or failed schema validation; trying the next source.');}}
  if(!next)throw new Error('All sources failed; existing market.json was preserved.');
  if(Date.parse(next.generatedAt)<Date.parse(previous.generatedAt))throw new Error('Source is older than the existing snapshot; existing data preserved.');
+ if(JSON.stringify(previous)===JSON.stringify({...next,syncedAt:previous.syncedAt})){
+  console.log(`Market snapshot is unchanged: ${previous.markets.length} public assets; source generatedAt ${previous.generatedAt}.`);
+  return {changed:false};
+ }
  await atomicJSON(resolve(root,'data/market.json'),next);
  console.log(`Market snapshot saved: ${next.markets.length} public assets; source generatedAt ${next.generatedAt}.`);
+ return {changed:true};
 }
 if(process.argv[1] && resolve(process.argv[1])===resolve(import.meta.filename)){
  syncMarket().catch(err=>{console.error(err.message);process.exitCode=1;});
