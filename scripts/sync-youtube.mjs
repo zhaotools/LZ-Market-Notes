@@ -12,11 +12,17 @@ import { promisify } from 'node:util';
 import { root, readJSON, atomicJSON, fetchJSON, validateContent, safeURL } from './lib.mjs';
 const execFileAsync=promisify(execFile);
 export const inferCategory=title=>/定投|系统|教程|工具|指标|DCA|Status/i.test(title)?'系统教程':'市场观察';
+const youtubeExclusions=site=>{
+ const ids=site.youtubeExcludedVideoIds??[];
+ if(!Array.isArray(ids)||ids.some(id=>!/^[\w-]{11}$/.test(id)))throw new Error('youtubeExcludedVideoIds must contain valid YouTube video IDs.');
+ return new Set(ids);
+};
 const decodeXML=value=>String(value||'').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/&#x([\da-f]+);/gi,(_,n)=>String.fromCodePoint(parseInt(n,16))).replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n))).replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 const tag=(block,name)=>decodeXML(block.match(new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${name}>`))?.[1]||'').replace(/<[^>]+>/g,'').trim();
 const compact=value=>String(value||'').replace(/\s+/g,' ').trim();
 export function parseYoutubeFeed(xml,site,previous,{syncedAt=new Date().toISOString()}={}){
- const entries=[...String(xml).matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(x=>x[1]).slice(0,5);
+ const excluded=youtubeExclusions(site);
+ const entries=[...String(xml).matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(x=>x[1]).filter(entry=>!excluded.has(tag(entry,'yt:videoId'))).slice(0,5);
  if(!entries.length)throw new Error('YouTube RSS feed returned no public videos; existing data preserved.');
  const withoutEntries=String(xml).replace(/<entry>[\s\S]*?<\/entry>/g,'');
  const channelTitle=tag(withoutEntries,'title');
@@ -56,6 +62,7 @@ async function syncYoutubeRSS(site,previous){
  return {changed:true};
 }
 async function syncYoutubeAPI(site,previous,key){
+ const excluded=youtubeExclusions(site);
  const api=async(endpoint,params)=>{
   const u=new URL(`https://www.googleapis.com/youtube/v3/${endpoint}`);
   Object.entries({...params,key}).forEach(([k,v])=>u.searchParams.set(k,String(v)));
@@ -69,7 +76,7 @@ async function syncYoutubeAPI(site,previous,key){
  do{
   const p=await api('playlistItems',{part:'contentDetails',playlistId,maxResults:50,...(token?{pageToken:token}:{})});
   if(!Array.isArray(p.items))throw new Error('Malformed playlist response; existing data preserved.');
-  for(const item of p.items){const id=item.contentDetails?.videoId;if(/^[\w-]{11}$/.test(id||''))ids.add(id);}
+  for(const item of p.items){const id=item.contentDetails?.videoId;if(/^[\w-]{11}$/.test(id||'')&&!excluded.has(id))ids.add(id);}
   token=p.nextPageToken||'';
   if(++pages>100)throw new Error('Pagination safety limit exceeded; existing data preserved.');
  }while(token);

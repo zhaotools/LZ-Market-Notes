@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "synced-public-rss",
-  "lastSyncedAt": "2026-09-10T16:54:31.015Z",
+  "lastSyncedAt": "2026-09-10T18:38:16.687Z",
   "channelId": "UCSk0Q0f1xvfyRQCxiFlfNWg",
   "channelTitle": "老赵市场观察",
   "sourceUrl": "https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg",
@@ -67,22 +67,6 @@
       "url": "https://www.youtube.com/watch?v=rRuD6kmdaWQ",
       "thumbnail": "https://i.ytimg.com/vi/rRuD6kmdaWQ/hqdefault.jpg",
       "publishedAt": "2026-08-25T08:36:10+00:00",
-      "duration": null,
-      "embeddable": null,
-      "status": "published"
-    },
-    {
-      "id": "1YV4RAFeNXs",
-      "youtubeId": "1YV4RAFeNXs",
-      "title": "区块链时光直播",
-      "summary": "来自「老赵市场观察」的公开视频。",
-      "category": "市场观察",
-      "editorialCategory": null,
-      "coverTitle": "区块链时光直播",
-      "theme": "cross",
-      "url": "https://www.youtube.com/watch?v=1YV4RAFeNXs",
-      "thumbnail": "https://i.ytimg.com/vi/1YV4RAFeNXs/hqdefault.jpg",
-      "publishedAt": "2026-08-22T05:55:53+00:00",
       "duration": null,
       "embeddable": null,
       "status": "published"

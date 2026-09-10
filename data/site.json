@@ -11,6 +11,9 @@
   "youtubeUrl": "https://www.youtube.com/@lzmarketwatch",
   "youtubeChannelId": "UCSk0Q0f1xvfyRQCxiFlfNWg",
   "youtubeChannelTitle": "老赵市场观察",
+  "youtubeExcludedVideoIds": [
+    "1YV4RAFeNXs"
+  ],
   "mapUrl": "https://zhaotools.github.io/LZ-4Stage-Map/",
   "toolkitUrl": "https://zhaotools.github.io/LZ-Market-Toolkit/",
   "baseUrl": "https://zhaotools.github.io/LZ-Market-Notes/",

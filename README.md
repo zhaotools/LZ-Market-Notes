@@ -25,7 +25,7 @@
 
 公众号：已人工核验并接入 5 篇正式文章的公众号名称、标题、发布日期、页面摘要和原文链接。网站只保存目录信息并跳转至公众号原文，不搬运正文。
 
-YouTube：已核验频道 `@lzmarketwatch` 对应“老赵市场观察”（频道 ID `UCSk0Q0f1xvfyRQCxiFlfNWg`），并通过 YouTube 官方公开 RSS 接入最近 5 个公开视频的真实 ID、标题、发布日期、缩略图与原视频链接。RSS 不提供时长、完整历史或嵌入权限字段；这些字段仍需配置 Data API 后补全。
+YouTube：已核验频道 `@lzmarketwatch` 对应“老赵市场观察”（频道 ID `UCSk0Q0f1xvfyRQCxiFlfNWg`），并通过 YouTube 官方公开 RSS 接入最多最近 5 个有效公开视频的真实 ID、标题、发布日期、缩略图与原视频链接。已明确排除无法播放且未出现在频道列表中的旧直播占位页。RSS 不提供时长、完整历史或嵌入权限字段；这些字段仍需配置 Data API 后补全。
 
 市场：已从 Map 的 GitHub Pages 公开 JSON 联网同步 16 个全球样本，源生成时间为 2026-09-10T04:15:53.783Z，不是实时行情。保留来源、阶段、子阶段、阶段持续周数、周线口径日期及原始解读。详见 `docs/DATA_SOURCES.md`。
 
@@ -91,7 +91,7 @@ CODEX_TASK.md                可直接交给 Codex 的开发任务书
 
 Map 可以运行 `npm run sync:market`。脚本只尝试公开 JSON，校验 `global` 范围、结构、计数与时间后原子写入；失败保留旧快照，不读取会员接口、不复制算法。GitHub Pages 公开端点已在本次环境中同步成功。
 
-直接运行 `npm run sync:youtube` 会按 `site.json` 中已核验的频道 ID 读取 YouTube 官方 RSS，适合无密钥更新最近公开视频。提供 `YOUTUBE_API_KEY` 后，脚本改用 Data API 分页读取完整公开目录，并补充时长与嵌入权限。密钥不会进入前端、日志或构建输出；获取失败不会清空现有目录。同步后仍应人工核验分类。
+直接运行 `npm run sync:youtube` 会按 `site.json` 中已核验的频道 ID 读取 YouTube 官方 RSS，适合无密钥更新最近公开视频；`youtubeExcludedVideoIds` 用于持续排除已人工确认无效的直播占位页。提供 `YOUTUBE_API_KEY` 后，脚本改用 Data API 分页读取完整公开目录，并补充时长与嵌入权限。密钥不会进入前端、日志或构建输出；获取失败不会清空现有目录。同步后仍应人工核验分类。
 
 个人订阅号没有微信官方“获取已发布文章列表”接口权限。`npm run sync:wechat` 从 GitHub Actions Secret `WECHAT_FEED_URL` 读取一次性配置的第三方 RSS/Atom Feed，只接受 `mp.weixin.qq.com` 原文链接并合并到已有目录；Feed URL、登录信息与文章正文都不会写入仓库或网站。未配置 Feed 时保留现有文章快照。
 
@@ -111,4 +111,4 @@ GitHub Actions 每天北京时间 09:17 和 21:17 自动同步 YouTube RSS、Map
 
 完成本地构建、18 项 Node 测试、170 项 Chrome 界面检查，包含 6 种宽度下全部页面的内容、导航和横向溢出检查。
 
-浏览器检查覆盖本地多页面站点和独立 `preview.html`，验证 5 篇正式文章、二维码、5 条 RSS 视频、播放器按需创建和关闭、筛选及手机菜单。另行核验 5 个公众号原文页面、Map 公开 JSON 与 YouTube RSS。尚未验证 YouTube 真实播放过程、Safari 或微信内置浏览器。
+浏览器检查覆盖本地多页面站点和独立 `preview.html`，验证 5 篇正式文章、二维码、4 条有效 RSS 视频、播放器按需创建和关闭、筛选及手机菜单。另行核验 5 个公众号原文页面、Map 公开 JSON 与 YouTube RSS。尚未验证 YouTube 真实播放过程、Safari 或微信内置浏览器。

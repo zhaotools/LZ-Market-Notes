@@ -22,7 +22,7 @@
 
 “老赵市场笔记”为个人订阅号，不能使用微信官方发布列表 API。项目提供 `scripts/sync-wechat.mjs` 作为可替换 RSS/Atom 连接器：Feed URL 仅从 GitHub Actions Secret `WECHAT_FEED_URL` 读取，返回条目必须包含 HTTPS 的 `mp.weixin.qq.com` 原文链接、标题和有效发布日期。连接器只保留目录摘要，不保存 Feed 凭据或文章正文；Feed 缺失、失效或账号名称不匹配时保留上一版数据。
 
-YouTube 已核验 `@lzmarketwatch` 对应频道“老赵市场观察”，频道 ID 为 `UCSk0Q0f1xvfyRQCxiFlfNWg`。`data/videos.json` 来自 YouTube 官方公开 RSS 最近目录；5 个原视频页面、缩略图和 oEmbed 在 2026-09-10 联网检查时均返回 HTTP 200。
+YouTube 已核验 `@lzmarketwatch` 对应频道“老赵市场观察”，频道 ID 为 `UCSk0Q0f1xvfyRQCxiFlfNWg`。`data/videos.json` 来自 YouTube 官方公开 RSS 最近目录。2026-09-11 复核发现视频 `1YV4RAFeNXs` 虽仍在 RSS 且页面、缩略图和 oEmbed 返回 HTTP 200，但播放状态为 `LIVE_STREAM_OFFLINE`、页面提示直播尚未开始，且频道视频与直播列表均未展示，因此作为无效旧直播占位页加入 `youtubeExcludedVideoIds`；网站当前展示其余 4 条有效目录信息。
 
 ## Map 公开快照
 

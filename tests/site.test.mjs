@@ -39,7 +39,7 @@ test('production content and public URL are release-ready',()=>{
  assert.equal(current.site.wechatQr,'assets/wechat-qr.jpg');
  assert.equal(current.articles.items.length,5);
  assert.ok(current.articles.items.every(x=>x.status==='published'));
- assert.equal(current.videos.items.length,5);
+ assert.equal(current.videos.items.length,4);
 });
 test('stage counts must match actual public asset samples',()=>{
  const x=structuredClone(data.market);x.interpretation.stageCounts.S2++;
@@ -87,6 +87,17 @@ test('YouTube RSS is capped at the latest five entries',()=>{
  const entries=Array.from({length:6},(_,i)=>`<entry><yt:videoId>vid0000000${i}</yt:videoId><yt:channelId>UCSk0Q0f1xvfyRQCxiFlfNWg</yt:channelId><title>视频 ${i}</title><published>2026-09-${String(10-i).padStart(2,'0')}T07:31:57+00:00</published></entry>`).join('');
  const next=parseYoutubeFeed(`<feed><title>老赵市场观察</title>${entries}</feed>`,{youtubeChannelId:'UCSk0Q0f1xvfyRQCxiFlfNWg',youtubeChannelTitle:'老赵市场观察'},{items:[]});
  assert.equal(next.items.length,5);
+});
+test('configured YouTube exclusions are applied before the latest-five cap',()=>{
+ const entries=Array.from({length:6},(_,i)=>`<entry><yt:videoId>vid0000000${i}</yt:videoId><yt:channelId>UCSk0Q0f1xvfyRQCxiFlfNWg</yt:channelId><title>视频 ${i}</title><published>2026-09-${String(10-i).padStart(2,'0')}T07:31:57+00:00</published></entry>`).join('');
+ const site={youtubeChannelId:'UCSk0Q0f1xvfyRQCxiFlfNWg',youtubeChannelTitle:'老赵市场观察',youtubeExcludedVideoIds:['vid00000000']};
+ const next=parseYoutubeFeed(`<feed><title>老赵市场观察</title>${entries}</feed>`,site,{items:[]});
+ assert.equal(next.items.length,5);assert.ok(!next.items.some(x=>x.youtubeId==='vid00000000'));
+});
+test('source-only YouTube exclusion config is not published',async()=>{
+ const publishedSite=JSON.parse(await readFile(resolve(root,'site/data/site.json'),'utf8'));
+ const generated=await readFile(resolve(root,'site/videos.html'),'utf8');
+ assert.equal(publishedSite.youtubeExcludedVideoIds,undefined);assert.ok(!generated.includes('1YV4RAFeNXs'));assert.ok(!generated.includes('区块链时光直播'));
 });
 test('WeChat RSS connector keeps only verified original links and no article bodies',()=>{
  const xml=`<rss><channel><title>老赵市场笔记</title><item><title><![CDATA[AI 与投资系统]]></title><link>https://mp.weixin.qq.com/s/new-article</link><pubDate>Thu, 10 Sep 2026 16:30:00 GMT</pubDate><description><![CDATA[<p>只保存目录摘要。</p>]]></description><content:encoded><![CDATA[<p>正文不应保存</p>]]></content:encoded></item></channel></rss>`;

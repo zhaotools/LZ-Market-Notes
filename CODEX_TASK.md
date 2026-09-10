@@ -46,7 +46,7 @@
 
 ### 5. 同步与部署
 
-定时同步已确定为每天北京时间 09:17 和 21:17。YouTube 使用官方 RSS 最近 5 条，Map 使用公开 global 快照；个人订阅号通过 GitHub Actions Secret `WECHAT_FEED_URL` 配置可替换的第三方 RSS/Atom 连接器。仅在真实内容变化时持久化 `data/` 与生成页面；失败保留旧快照，不清空内容，也不保存 Feed 凭据或公众号正文。
+定时同步已确定为每天北京时间 09:17 和 21:17。YouTube 使用官方 RSS 最多最近 5 条有效内容，并排除 `youtubeExcludedVideoIds` 中已人工确认无效的直播占位页；Map 使用公开 global 快照；个人订阅号通过 GitHub Actions Secret `WECHAT_FEED_URL` 配置可替换的第三方 RSS/Atom 连接器。仅在真实内容变化时持久化 `data/` 与生成页面；失败保留旧快照，不清空内容，也不保存 Feed 凭据或公众号正文。
 
 确认最终 GitHub 仓库和域名后，在新分支完成。不要假定 zhaotools.github.io 根站可直接覆盖。仓库所有权和部署权限必须明确，未经用户确认不覆盖已有站点。
 
