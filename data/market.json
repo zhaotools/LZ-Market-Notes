@@ -1,0 +1,325 @@
+{
+  "schemaVersion": "lz-notes-public-market-v1",
+  "snapshotType": "public-snapshot",
+  "generatedAt": "2026-09-10T04:15:53.783Z",
+  "syncedAt": "2026-09-10T16:54:21.455Z",
+  "commonStageAsOf": "2026-08-31",
+  "analysisPeriod": "weekly-completed-bars",
+  "sourceUrl": "https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json",
+  "sourceBlobSha": null,
+  "sourceNote": "仅同步来源中已公开的全球样本；快照生成时间不等于阶段确认日期。",
+  "markets": [
+    {
+      "code": "GSPC.INDEX",
+      "symbol": "SPX",
+      "name": "标普500指数",
+      "region": "美股",
+      "stage": "S2",
+      "subStage": "S2",
+      "weeks": 20,
+      "stageDetail": "趋势减速",
+      "observationStage": "S2",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-09",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "SOXX",
+      "symbol": "SOXX",
+      "name": "iShares半导体ETF",
+      "region": "美股",
+      "stage": "S2",
+      "subStage": "S2B-",
+      "weeks": 64,
+      "stageDetail": "趋势减速",
+      "observationStage": "S2B-",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-09",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "VIX",
+      "symbol": "VIX",
+      "name": "VIX恐慌指数",
+      "region": "美股",
+      "stage": "S4",
+      "subStage": "S4",
+      "weeks": 18,
+      "stageDetail": "下降减速",
+      "observationStage": "S4",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-09",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "SZ399006",
+      "symbol": "399006",
+      "name": "创业板指",
+      "region": "A股",
+      "stage": "S4",
+      "subStage": "S4A",
+      "weeks": 1,
+      "stageDetail": "正常下降",
+      "observationStage": "S4",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-10",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "HSTECH",
+      "symbol": "HSTECH",
+      "name": "恒生科技指数",
+      "region": "港股",
+      "stage": "S4",
+      "subStage": "S4",
+      "weeks": 30,
+      "stageDetail": "下降减速",
+      "observationStage": "S4",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-10",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "N225",
+      "symbol": "N225",
+      "name": "日经225指数",
+      "region": "日股",
+      "stage": "S2",
+      "subStage": "S2B-",
+      "weeks": 62,
+      "stageDetail": "趋势减速",
+      "observationStage": "S2B-",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-10",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "STOXX50E",
+      "symbol": "SX5E",
+      "name": "欧洲STOXX 50指数",
+      "region": "欧股",
+      "stage": "S2",
+      "subStage": "S2-",
+      "weeks": 12,
+      "stageDetail": "趋势减速",
+      "observationStage": "S2-",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-09",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "DXY",
+      "symbol": "DXY",
+      "name": "美元指数",
+      "region": "大宗·宏观",
+      "stage": "S1",
+      "subStage": "S1",
+      "weeks": 44,
+      "stageDetail": "筑底阶段",
+      "observationStage": "S1",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-10",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "US10Y",
+      "symbol": "US10Y",
+      "name": "美国10年期国债收益率",
+      "region": "大宗·宏观",
+      "stage": "S2",
+      "subStage": "S2",
+      "weeks": 18,
+      "stageDetail": "正常推进",
+      "observationStage": "S2",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-09",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "CL",
+      "symbol": "WTI",
+      "name": "WTI原油",
+      "region": "大宗·宏观",
+      "stage": "S2",
+      "subStage": "S2",
+      "weeks": 28,
+      "stageDetail": "趋势减速",
+      "observationStage": "S2",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-10",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "XAU",
+      "symbol": "GOLD",
+      "name": "黄金（COMEX期货代理）",
+      "region": "大宗·宏观",
+      "stage": "S4",
+      "subStage": "S4-",
+      "weeks": 10,
+      "stageDetail": "下降减速",
+      "observationStage": "S4-",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-10",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "BTC-USD",
+      "symbol": "BTC",
+      "name": "比特币",
+      "region": "加密",
+      "stage": "S2",
+      "subStage": "S2A",
+      "weeks": 1,
+      "stageDetail": "正常推进",
+      "observationStage": "S2",
+      "stageAsOf": "2026-08-31",
+      "marketAsOf": "2026-08-31",
+      "completedThrough": "2026-09-06",
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "ETH-USD",
+      "symbol": "ETH",
+      "name": "以太坊",
+      "region": "加密",
+      "stage": "S2",
+      "subStage": "S2A",
+      "weeks": 1,
+      "stageDetail": "正常推进",
+      "observationStage": "S2",
+      "stageAsOf": "2026-08-31",
+      "marketAsOf": "2026-08-31",
+      "completedThrough": "2026-09-06",
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "NDQ",
+      "symbol": "NDX",
+      "name": "纳斯达克100指数",
+      "region": "美股",
+      "stage": "S2",
+      "subStage": "S2",
+      "weeks": 20,
+      "stageDetail": "趋势减速",
+      "observationStage": "S2",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-09",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "HSI",
+      "symbol": "HSI",
+      "name": "恒生指数",
+      "region": "港股",
+      "stage": "S4",
+      "subStage": "S4-",
+      "weeks": 11,
+      "stageDetail": "→S1筑底观察",
+      "observationStage": "S1",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-10",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    },
+    {
+      "code": "000300.SH",
+      "symbol": "CSI300",
+      "name": "沪深300",
+      "region": "A股",
+      "stage": "S3",
+      "subStage": "S3",
+      "weeks": 21,
+      "stageDetail": "筑顶阶段",
+      "observationStage": "S3",
+      "stageAsOf": "2026-09-04",
+      "marketAsOf": "2026-09-10",
+      "completedThrough": null,
+      "collections": [
+        "global"
+      ]
+    }
+  ],
+  "interpretation": {
+    "viewKey": "global",
+    "generatedAt": "2026-09-10T04:15:53.783Z",
+    "commonStageAsOf": "2026-08-31",
+    "sourceSnapshotSha256": "2828c368284975cb41afd3e8b536d9ad7fc38998c12f5fff6515ed01b5303960",
+    "universeSize": 16,
+    "analyzedSize": 16,
+    "excludedSize": 0,
+    "stageCounts": {
+      "S1": 1,
+      "S2": 9,
+      "S3": 1,
+      "S4": 5
+    },
+    "headline": "全球市场以S2上升阶段为主",
+    "summary": "S2资产占9/16，上升结构占比较高；同时仍有5个资产处于S4，市场并非同步运行。",
+    "insights": [
+      {
+        "id": "structure",
+        "label": "阶段结构",
+        "text": "16个有效资产中，S1 1个、S2 9个、S3 1个、S4 5个。"
+      },
+      {
+        "id": "maturity",
+        "label": "趋势位置",
+        "text": "比特币、以太坊处于S2早期；iShares半导体ETF、日经225指数、欧洲STOXX 50指数处于S2后期或减速段；创业板指处于S4早期；黄金（COMEX期货代理）、恒生指数处于S4后期或减速段。"
+      },
+      {
+        "id": "observation",
+        "label": "本周观察",
+        "text": "恒生指数由确认S4转向S1观察。观察信号尚未等同于阶段确认。"
+      },
+      {
+        "id": "divergence",
+        "label": "市场分化",
+        "text": "美股以S2为主；A股阶段分布在S3、S4之间较为分散；港股以S4为主；日股以S2为主；欧股以S2为主；大宗·宏观S2数量最多；加密以S2为主。不同类别资产的阶段含义应分别理解。"
+      }
+    ],
+    "note": "阶段数量用于描述当前周期位置，不代表资产等权配置、未来涨跌预测或投资建议。"
+  }
+}

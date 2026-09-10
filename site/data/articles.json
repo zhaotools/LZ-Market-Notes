@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "status": "verified-manual-directory",
+  "lastImportedAt": "2026-09-11T00:50:00+08:00",
+  "note": "5 篇正式条目已人工核验公众号名称、标题、发布日期、页面摘要与 mp.weixin.qq.com 原文 URL；本站只保存目录和摘要，不搬运正文。",
+  "items": [
+    {
+      "id": "daily-ai-chat",
+      "category": "AI 实践",
+      "title": "养成了一个好习惯：每天跟AI聊天",
+      "summary": "我有个想法，跟你聊聊",
+      "date": "2026-09-06",
+      "theme": "coding",
+      "tags": [
+        "AI",
+        "个人实践"
+      ],
+      "featured": true,
+      "url": "https://mp.weixin.qq.com/s/nFVimLo5FUBodxvXrMr-9g",
+      "status": "published"
+    },
+    {
+      "id": "2026-08-review",
+      "category": "工具使用",
+      "title": "2026年8月复盘：把方法变成系统，把系统变成产品",
+      "summary": "8月是充实的，收获很大。",
+      "date": "2026-09-05",
+      "theme": "toolkit",
+      "tags": [
+        "复盘",
+        "系统",
+        "产品"
+      ],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s/Zy5BqgP448L2bcmXb8_WrQ",
+      "status": "published"
+    },
+    {
+      "id": "reading-longwin-seasons",
+      "category": "投资方法",
+      "title": "读《长赢》：投资要看季节，不要被天气带走",
+      "summary": "看清季节，做该做的事",
+      "date": "2026-09-01",
+      "theme": "stage",
+      "tags": [
+        "长赢",
+        "投资季节",
+        "方法"
+      ],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s/uOqKpTflbC8wM2KWo0b8sg",
+      "status": "published"
+    },
+    {
+      "id": "large-capital-and-majority",
+      "category": "市场观察",
+      "title": "大资金和大多数",
+      "summary": "低位的时候，坏消息帮助大资金获得筹码；高位的时候，好消息帮助大资金找到买家。理解这一点，可能才真正开始理解“股票市场逻辑”。",
+      "date": "2026-08-29",
+      "theme": "market",
+      "tags": [
+        "市场逻辑",
+        "资金",
+        "情绪"
+      ],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s/KdUiWFxqn-Gm3vin6w0JUA",
+      "status": "published"
+    },
+    {
+      "id": "trend-investing-for-individuals",
+      "category": "投资方法",
+      "title": "为什么趋势投资更适合普通投资者，成功概率高于价值投资？",
+      "summary": "普通投资者真正需要的，不是更复杂的预测，而是更简单、更明确、更能够长期坚持的规则。",
+      "date": "2026-08-28",
+      "theme": "method",
+      "tags": [
+        "趋势投资",
+        "普通投资者",
+        "规则"
+      ],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s/j9WVATPxktg4GHy9rIMTIg",
+      "status": "published"
+    }
+  ]
+}

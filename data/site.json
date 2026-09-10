@@ -1,0 +1,28 @@
+{
+  "name": "老赵市场笔记",
+  "englishName": "MARKET NOTES",
+  "author": "老赵",
+  "description": "记录市场的四季，分享投资的方法与 AI 实践。老赵的文章、视频和市场观察，都在这里。",
+  "tagline": "把决策交给系统，把时间留给自己。",
+  "timezone": "Asia/Shanghai",
+  "wechatName": "老赵市场笔记",
+  "wechatQr": "assets/wechat-qr.jpg",
+  "youtubeHandle": "@lzmarketwatch",
+  "youtubeUrl": "https://www.youtube.com/@lzmarketwatch",
+  "youtubeChannelId": "UCSk0Q0f1xvfyRQCxiFlfNWg",
+  "youtubeChannelTitle": "老赵市场观察",
+  "mapUrl": "https://zhaotools.github.io/LZ-4Stage-Map/",
+  "toolkitUrl": "https://zhaotools.github.io/LZ-Market-Toolkit/",
+  "baseUrl": "https://zhaotools.github.io/LZ-Market-Notes/",
+  "previewMode": false,
+  "homeMarkets": [
+    "GSPC.INDEX",
+    "000300.SH",
+    "HSI",
+    "BTC-USD",
+    "N225",
+    "STOXX50E",
+    "XAU",
+    "US10Y"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "passed": 170,
+  "groups": {
+    "responsivePages": {
+      "checks": 144,
+      "pages": ["index", "articles", "videos", "market", "tools", "about"],
+      "widths": [360, 390, 430, 768, 1024, 1440],
+      "assertionsPerPage": ["title", "main content", "active navigation", "no horizontal overflow"]
+    },
+    "contentAndInteractions": {
+      "checks": 26,
+      "assertions": [
+        "production metadata and canonical URL",
+        "follow dialog and 430x430 QR image",
+        "five verified WeChat articles and search",
+        "five RSS videos",
+        "privacy-enhanced video iframe lifecycle",
+        "sixteen public Map assets and stage filter",
+        "Map and toolkit remain external independent sites",
+        "mobile menu open and Escape close",
+        "standalone preview page switching and production content",
+        "no browser JavaScript runtime errors"
+      ]
+    }
+  },
+  "browserErrors": [],
+  "browser": "Google Chrome, headless",
+  "method": "Local HTTP server plus standalone file preview. External video playback itself was not exercised."
+}

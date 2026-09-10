@@ -1,0 +1,521 @@
+{
+  "site": {
+    "name": "老赵市场笔记",
+    "englishName": "MARKET NOTES",
+    "author": "老赵",
+    "description": "记录市场的四季，分享投资的方法与 AI 实践。老赵的文章、视频和市场观察，都在这里。",
+    "tagline": "把决策交给系统，把时间留给自己。",
+    "timezone": "Asia/Shanghai",
+    "wechatName": "老赵市场笔记",
+    "wechatQr": null,
+    "youtubeHandle": "@lzmarketwatch",
+    "youtubeUrl": "https://www.youtube.com/@lzmarketwatch",
+    "mapUrl": "https://zhaotools.github.io/LZ-4Stage-Map/",
+    "toolkitUrl": "https://zhaotools.github.io/LZ-Market-Toolkit/",
+    "baseUrl": null,
+    "previewMode": true,
+    "homeMarkets": [
+      "GSPC.INDEX",
+      "000300.SH",
+      "HSI",
+      "BTC-USD",
+      "N225",
+      "STOXX50E",
+      "XAU",
+      "US10Y"
+    ]
+  },
+  "articles": {
+    "schemaVersion": 1,
+    "status": "layout-samples",
+    "note": "选题来自用户此前讨论，摘要为版式编辑稿；未核实正式发布日期与原文链接，不代表已经抓取公众号。",
+    "items": [
+      {
+        "id": "toolkit-v2",
+        "category": "工具使用",
+        "title": "老赵市场工具箱，官网 2.0 上线",
+        "summary": "把市场导航、趋势判断、状态观察和资金管理，连接成一套清晰的工具体系。",
+        "draftDate": "2026-09-10",
+        "date": null,
+        "theme": "toolkit",
+        "tags": [
+          "工具箱",
+          "产品介绍"
+        ],
+        "featured": true,
+        "url": null,
+        "status": "pending"
+      },
+      {
+        "id": "ai-coding",
+        "category": "AI 实践",
+        "title": "新时代的必备技能：AI Coding",
+        "summary": "从一个想法，到一套能用的工具。聊聊我用 AI 编程完成复杂工作的过程。",
+        "draftDate": "2026-09-08",
+        "date": null,
+        "theme": "coding",
+        "tags": [
+          "AI Coding",
+          "效率"
+        ],
+        "featured": false,
+        "url": null,
+        "status": "pending"
+      },
+      {
+        "id": "four-stage-notes",
+        "category": "投资方法",
+        "title": "四阶段系统使用心得",
+        "summary": "看清资产周期的位置，理解阶段如何变化，让观察有框架、行动有边界。",
+        "draftDate": "2026-09-08",
+        "date": null,
+        "theme": "stage",
+        "tags": [
+          "四季框架",
+          "方法"
+        ],
+        "featured": false,
+        "url": null,
+        "status": "pending"
+      },
+      {
+        "id": "global-seasons",
+        "category": "市场观察",
+        "title": "全球市场走到了哪个季节？",
+        "summary": "用春夏秋冬的语言，观察主要市场的差异，而不是给所有资产同一个答案。",
+        "draftDate": "2026-09-06",
+        "date": null,
+        "theme": "market",
+        "tags": [
+          "全球市场",
+          "LZ-4Stage"
+        ],
+        "featured": false,
+        "url": null,
+        "status": "pending"
+      },
+      {
+        "id": "trend-investing",
+        "category": "投资方法",
+        "title": "为什么趋势投资更适合普通投资者？",
+        "summary": "与其猜每一次转折，不如建立可重复的观察与风险管理方法。",
+        "draftDate": "2026-08-28",
+        "date": null,
+        "theme": "method",
+        "tags": [
+          "趋势投资",
+          "风险管理"
+        ],
+        "featured": false,
+        "url": null,
+        "status": "pending"
+      },
+      {
+        "id": "btc-backtest",
+        "category": "工具使用",
+        "title": "近 9 年 BTC 数据检验 LZ-4Stage",
+        "summary": "把方法放回历史数据中检验，同时认真讨论回测的假设与边界。",
+        "draftDate": "2026-08-24",
+        "date": null,
+        "theme": "backtest",
+        "tags": [
+          "BTC",
+          "历史回测"
+        ],
+        "featured": false,
+        "url": null,
+        "status": "pending"
+      }
+    ]
+  },
+  "videos": {
+    "schemaVersion": 1,
+    "status": "layout-samples",
+    "lastSyncedAt": null,
+    "channelId": null,
+    "note": "仅为用户已讨论视频主题的版式样例，未获取真实视频 ID、发布日期、时长与缩略图；卡片不假装可播放。",
+    "items": [
+      {
+        "id": "btc-summer",
+        "category": "市场观察",
+        "title": "BTC 进入 S2 夏季",
+        "summary": "从周线阶段的变化出发，理解新的观察位置与风险边界。",
+        "coverTitle": "BTC 进入\nS2 夏季",
+        "theme": "summer",
+        "youtubeId": null,
+        "url": null,
+        "thumbnail": null,
+        "publishedAt": null,
+        "duration": null,
+        "status": "pending"
+      },
+      {
+        "id": "btc-cross",
+        "category": "市场观察",
+        "title": "BTC 黄金交叉，注意短期回调",
+        "summary": "用趋势与状态两个视角，区分中期结构和短期节奏。",
+        "coverTitle": "黄金交叉之后\n关注短期节奏",
+        "theme": "cross",
+        "youtubeId": null,
+        "url": null,
+        "thumbnail": null,
+        "publishedAt": null,
+        "duration": null,
+        "status": "pending"
+      },
+      {
+        "id": "dca-guide",
+        "category": "系统教程",
+        "title": "趋势定投系统：功能介绍与案例分析",
+        "summary": "从定投温度、资金分配到案例，理解系统能做什么、不能做什么。",
+        "coverTitle": "趋势定投系统\n从功能到案例",
+        "theme": "dca",
+        "youtubeId": null,
+        "url": null,
+        "thumbnail": null,
+        "publishedAt": null,
+        "duration": null,
+        "status": "pending"
+      },
+      {
+        "id": "global-review",
+        "category": "市场观察",
+        "title": "用四季框架，看全球市场",
+        "summary": "把几个主要市场放在同一张地图上，观察它们不同的季节。",
+        "coverTitle": "全球市场\n同一张地图",
+        "theme": "global",
+        "youtubeId": null,
+        "url": null,
+        "thumbnail": null,
+        "publishedAt": null,
+        "duration": null,
+        "status": "pending"
+      }
+    ]
+  },
+  "market": {
+    "schemaVersion": "lz-notes-public-market-v1",
+    "snapshotType": "repository-snapshot",
+    "generatedAt": "2026-09-10T04:15:53.783Z",
+    "syncedAt": null,
+    "commonStageAsOf": "2026-08-31",
+    "analysisPeriod": "weekly-completed-bars",
+    "sourceUrl": "https://github.com/zhaotools/LZ-4Stage-Map/blob/main/data/dashboard.json",
+    "sourceBlobSha": "31f69504b4b39c4f3111d8a53e866352eae6d880",
+    "sourceNote": "公开 Map 仓库快照的展示字段摘录；不是实时行情，线上 JSON 读取尚待联网验证。",
+    "markets": [
+      {
+        "code": "GSPC.INDEX",
+        "symbol": "SPX",
+        "name": "标普 500",
+        "region": "美股",
+        "stage": "S2",
+        "subStage": "S2",
+        "weeks": 20,
+        "stageDetail": "趋势减速",
+        "observationStage": "S2",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-09",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "SOXX",
+        "symbol": "SOXX",
+        "name": "半导体 ETF",
+        "region": "美股",
+        "stage": "S2",
+        "subStage": "S2B-",
+        "weeks": 64,
+        "stageDetail": "趋势减速",
+        "observationStage": "S2B-",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-09",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "VIX",
+        "symbol": "VIX",
+        "name": "VIX 波动率指数",
+        "region": "美股",
+        "stage": "S4",
+        "subStage": "S4",
+        "weeks": 18,
+        "stageDetail": "下降减速",
+        "observationStage": "S4",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-09",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "SZ399006",
+        "symbol": "399006",
+        "name": "创业板指",
+        "region": "A股",
+        "stage": "S4",
+        "subStage": "S4A",
+        "weeks": 1,
+        "stageDetail": "正常下降",
+        "observationStage": "S4",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-10",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "HSTECH",
+        "symbol": "HSTECH",
+        "name": "恒生科技",
+        "region": "港股",
+        "stage": "S4",
+        "subStage": "S4",
+        "weeks": 30,
+        "stageDetail": "下降减速",
+        "observationStage": "S4",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-10",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "N225",
+        "symbol": "N225",
+        "name": "日经 225",
+        "region": "日股",
+        "stage": "S2",
+        "subStage": "S2B-",
+        "weeks": 62,
+        "stageDetail": "趋势减速",
+        "observationStage": "S2B-",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-10",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "STOXX50E",
+        "symbol": "SX5E",
+        "name": "欧洲 STOXX 50",
+        "region": "欧股",
+        "stage": "S2",
+        "subStage": "S2-",
+        "weeks": 12,
+        "stageDetail": "趋势减速",
+        "observationStage": "S2-",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-09",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "DXY",
+        "symbol": "DXY",
+        "name": "美元指数",
+        "region": "大宗·宏观",
+        "stage": "S1",
+        "subStage": "S1",
+        "weeks": 44,
+        "stageDetail": "筑底阶段",
+        "observationStage": "S1",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-10",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "US10Y",
+        "symbol": "US10Y",
+        "name": "美国 10 年期国债收益率",
+        "region": "大宗·宏观",
+        "stage": "S2",
+        "subStage": "S2",
+        "weeks": 18,
+        "stageDetail": "正常推进",
+        "observationStage": "S2",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-09",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "CL",
+        "symbol": "WTI",
+        "name": "WTI 原油",
+        "region": "大宗·宏观",
+        "stage": "S2",
+        "subStage": "S2",
+        "weeks": 28,
+        "stageDetail": "趋势减速",
+        "observationStage": "S2",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-10",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "XAU",
+        "symbol": "GOLD",
+        "name": "黄金 · COMEX 期货代理",
+        "region": "大宗·宏观",
+        "stage": "S4",
+        "subStage": "S4-",
+        "weeks": 10,
+        "stageDetail": "下降减速",
+        "observationStage": "S4-",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-10",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "BTC-USD",
+        "symbol": "BTC",
+        "name": "比特币",
+        "region": "加密",
+        "stage": "S2",
+        "subStage": "S2A",
+        "weeks": 1,
+        "stageDetail": "正常推进",
+        "observationStage": "S2",
+        "stageAsOf": "2026-08-31",
+        "marketAsOf": "2026-08-31",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": "2026-09-06"
+      },
+      {
+        "code": "ETH-USD",
+        "symbol": "ETH",
+        "name": "以太坊",
+        "region": "加密",
+        "stage": "S2",
+        "subStage": "S2A",
+        "weeks": 1,
+        "stageDetail": "正常推进",
+        "observationStage": "S2",
+        "stageAsOf": "2026-08-31",
+        "marketAsOf": "2026-08-31",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": "2026-09-06"
+      },
+      {
+        "code": "NDQ",
+        "symbol": "NDX",
+        "name": "纳斯达克 100",
+        "region": "美股",
+        "stage": "S2",
+        "subStage": "S2",
+        "weeks": 20,
+        "stageDetail": "趋势减速",
+        "observationStage": "S2",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-09",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "HSI",
+        "symbol": "HSI",
+        "name": "恒生指数",
+        "region": "港股",
+        "stage": "S4",
+        "subStage": "S4-",
+        "weeks": 11,
+        "stageDetail": "→S1筑底观察",
+        "observationStage": "S1",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-10",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      },
+      {
+        "code": "000300.SH",
+        "symbol": "CSI300",
+        "name": "沪深 300",
+        "region": "A股",
+        "stage": "S3",
+        "subStage": "S3",
+        "weeks": 21,
+        "stageDetail": "筑顶阶段",
+        "observationStage": "S3",
+        "stageAsOf": "2026-09-04",
+        "marketAsOf": "2026-09-10",
+        "collections": [
+          "global"
+        ],
+        "completedThrough": null
+      }
+    ],
+    "interpretation": {
+      "viewKey": "global",
+      "generatedAt": "2026-09-10T04:15:53.783Z",
+      "commonStageAsOf": "2026-08-31",
+      "sourceSnapshotSha256": "2828c368284975cb41afd3e8b536d9ad7fc38998c12f5fff6515ed01b5303960",
+      "universeSize": 16,
+      "analyzedSize": 16,
+      "excludedSize": 0,
+      "stageCounts": {
+        "S1": 1,
+        "S2": 9,
+        "S3": 1,
+        "S4": 5
+      },
+      "headline": "全球市场以S2上升阶段为主",
+      "summary": "S2资产占9/16，上升结构占比较高；同时仍有5个资产处于S4，市场并非同步运行。",
+      "insights": [
+        {
+          "id": "structure",
+          "label": "阶段结构",
+          "text": "16个有效资产中，S1 1个、S2 9个、S3 1个、S4 5个。"
+        },
+        {
+          "id": "maturity",
+          "label": "趋势位置",
+          "text": "比特币、以太坊处于S2早期；iShares半导体ETF、日经225指数、欧洲STOXX 50指数处于S2后期或减速段；创业板指处于S4早期；黄金（COMEX期货代理）、恒生指数处于S4后期或减速段。"
+        },
+        {
+          "id": "observation",
+          "label": "本周观察",
+          "text": "恒生指数由确认S4转向S1观察。观察信号尚未等同于阶段确认。"
+        },
+        {
+          "id": "divergence",
+          "label": "市场分化",
+          "text": "美股以S2为主；A股阶段分布在S3、S4之间较为分散；港股以S4为主；日股以S2为主；欧股以S2为主；大宗·宏观S2数量最多；加密以S2为主。不同类别资产的阶段含义应分别理解。"
+        }
+      ],
+      "note": "阶段数量用于描述当前周期位置，不代表资产等权配置、未来涨跌预测或投资建议。"
+    }
+  }
+}
