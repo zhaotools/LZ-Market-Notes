@@ -57,7 +57,7 @@ https://github.com/zhaotools/LZ-Market-Toolkit/blob/main/index.html
 GitHub Pages 工作流参考通过 GitHub 连接器读取的官方模板：
 https://github.com/actions/starter-workflows/blob/main/pages/static.yml
 
-工作流在北京时间 09:17 和 21:17 自动检查 YouTube RSS、Map 公开快照和已配置的公众号 Feed。只有实际内容变化才提交 `data/`、`site/` 与 `preview.html`；随后在同一次运行内完成 Pages 部署，避免依赖机器人提交再次触发工作流。同步后依次构建、测试并运行 `release:check`，通过后只上传 `site/`。2026-09-10 已按各 Action 官方最新稳定主版本更新为 checkout@v7、setup-node@v7、configure-pages@v6、upload-pages-artifact@v5 与 deploy-pages@v5。
+工作流在北京时间 09:17 和 21:17 自动检查 YouTube RSS、Map 公开快照和已配置的公众号 Feed，并在 10:07 和 22:07 分别补偿重试。YouTube RSS 请求会先进行带超时与明确请求头的分级重试；仍失败时使用 IPv4 `curl` 对传输错误和临时 HTTP 错误继续重试，并输出不含凭据的错误摘要。只有实际内容变化才提交 `data/`、`site/` 与 `preview.html`；随后在同一次运行内完成 Pages 部署，避免依赖机器人提交再次触发工作流。同步后依次构建、测试并运行 `release:check`，通过后只上传 `site/`。2026-09-10 已按各 Action 官方最新稳定主版本更新为 checkout@v7、setup-node@v7、configure-pages@v6、upload-pages-artifact@v5 与 deploy-pages@v5。
 
 无密钥路径采用 YouTube 官方公开 RSS：
 https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg

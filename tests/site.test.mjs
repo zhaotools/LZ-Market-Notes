@@ -6,7 +6,7 @@ import vm from 'node:vm';
 import {readJSON,validateMarket,validateContent,esc,safeURL,safeAssetPath,root} from '../scripts/lib.mjs';
 import {renderers,pageHTML,nav} from '../scripts/templates.mjs';
 import {normalizeMarket} from '../scripts/sync-market.mjs';
-import {inferCategory,parseYoutubeFeed} from '../scripts/sync-youtube.mjs';
+import {fetchYoutubeFeed,inferCategory,parseYoutubeFeed} from '../scripts/sync-youtube.mjs';
 import {inferArticleCategory,parseWechatFeed} from '../scripts/sync-wechat.mjs';
 import {normalizeArticleImport} from '../scripts/import-articles.mjs';
 const data=JSON.parse(await readFile(resolve(root,'tests/fixtures/demo.json'),'utf8'));
@@ -98,6 +98,15 @@ test('headline follows dominant stage rather than hardcoding summer',()=>{
  const h=renderers.market(d);assert.ok(h.includes('冬季资产占比较高'));assert.ok(h.includes('持续关注阶段变化'));
 });
 test('video category inference is simple and deterministic',()=>{assert.equal(inferCategory('LZ-DCA 教程'),'系统教程');assert.equal(inferCategory('全球市场周观察'),'市场观察');});
+test('YouTube RSS transport retries transient failures before succeeding',async()=>{
+ const xml='<feed><entry><title>视频</title></entry></feed>',delays=[],options=[];let calls=0;
+ const result=await fetchYoutubeFeed('https://www.youtube.com/feeds/videos.xml?channel_id=test',{
+  delays:[0,1,2],waitImpl:async ms=>delays.push(ms),onRetry:()=>{},
+  fetchImpl:async(_url,requestOptions)=>{options.push(requestOptions);calls++;return calls<3?{ok:false,status:503}:{ok:true,status:200,text:async()=>xml};}
+ });
+ assert.equal(result,xml);assert.equal(calls,3);assert.deepEqual(delays,[1,2]);
+ assert.match(options[0].headers['user-agent'],/LZ-Market-Notes/);assert.equal(options[0].redirect,'follow');
+});
 test('official YouTube RSS entries are channel-bound and normalized',()=>{
  const xml=`<feed><title>老赵市场观察</title><entry><yt:videoId>OdzO84ToAlM</yt:videoId><yt:channelId>UCSk0Q0f1xvfyRQCxiFlfNWg</yt:channelId><title>比特币黄金交叉 &amp; 短期节奏</title><published>2026-09-10T07:31:57+00:00</published><media:description>公开说明</media:description></entry></feed>`;
  const site={youtubeChannelId:'UCSk0Q0f1xvfyRQCxiFlfNWg',youtubeChannelTitle:'老赵市场观察'};

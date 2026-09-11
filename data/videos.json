@@ -1,12 +1,28 @@
 {
   "schemaVersion": 1,
   "status": "synced-public-rss",
-  "lastSyncedAt": "2026-09-11T02:22:18.983Z",
+  "lastSyncedAt": "2026-09-11T15:56:56.220Z",
   "channelId": "UCSk0Q0f1xvfyRQCxiFlfNWg",
   "channelTitle": "老赵市场观察",
   "sourceUrl": "https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg",
   "note": "通过 YouTube 官方公开 RSS 同步最近公开视频。RSS 不提供完整历史、时长或嵌入权限；配置 Data API 密钥后可同步完整公开视频目录并核验这些字段。",
   "items": [
+    {
+      "id": "eXS3gztvNJI",
+      "youtubeId": "eXS3gztvNJI",
+      "title": "趋势定投系统 LZ-DCA 介绍｜2026-9-10",
+      "summary": "1、定投指标 LZ-DCA 介绍 2、定投系统功能介绍 3、定投案例分析",
+      "category": "系统教程",
+      "editorialCategory": null,
+      "coverTitle": "趋势定投系统 LZ-DCA 介绍｜2026-9-10",
+      "theme": "cross",
+      "url": "https://www.youtube.com/watch?v=eXS3gztvNJI",
+      "thumbnail": "https://i.ytimg.com/vi/eXS3gztvNJI/hqdefault.jpg",
+      "publishedAt": "2026-09-11T02:48:30+00:00",
+      "duration": null,
+      "embeddable": null,
+      "status": "published"
+    },
     {
       "id": "OKxgjpSEEqg",
       "youtubeId": "OKxgjpSEEqg",
@@ -67,22 +83,6 @@
       "url": "https://www.youtube.com/watch?v=aJqCPoT2vs4",
       "thumbnail": "https://i.ytimg.com/vi/aJqCPoT2vs4/hqdefault.jpg",
       "publishedAt": "2026-08-30T15:27:01+00:00",
-      "duration": null,
-      "embeddable": null,
-      "status": "published"
-    },
-    {
-      "id": "rRuD6kmdaWQ",
-      "youtubeId": "rRuD6kmdaWQ",
-      "title": "老赵市场观察-加密牛市启动-2026-08-21",
-      "summary": "老赵市场观察 第一场直播 主题：加密牛市启动 内容： 1、行情分析 2、牛熊周期解读 3、仓位管理 4、资产配置",
-      "category": "市场观察",
-      "editorialCategory": null,
-      "coverTitle": "老赵市场观察-加密牛市启动-2026-08-21",
-      "theme": "cross",
-      "url": "https://www.youtube.com/watch?v=rRuD6kmdaWQ",
-      "thumbnail": "https://i.ytimg.com/vi/rRuD6kmdaWQ/hqdefault.jpg",
-      "publishedAt": "2026-08-25T08:36:10+00:00",
       "duration": null,
       "embeddable": null,
       "status": "published"

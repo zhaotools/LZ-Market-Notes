@@ -5,8 +5,8 @@ on:
   schedule:
     # Primary syncs: 09:17 and 21:17 Asia/Shanghai; off the hour to reduce scheduler delay.
     - cron: '17 1,13 * * *'
-    # Morning compensation retry: 10:07 Asia/Shanghai. No content change means no commit or deploy.
-    - cron: '7 2 * * *'
+    # Compensation retries: 10:07 and 22:07 Asia/Shanghai. No content change means no commit or deploy.
+    - cron: '7 2,14 * * *'
   workflow_dispatch:
 permissions:
   contents: write

@@ -11,6 +11,12 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { root, readJSON, atomicJSON, fetchJSON, validateContent, safeURL } from './lib.mjs';
 const execFileAsync=promisify(execFile);
+const rssHeaders={
+ accept:'application/atom+xml,application/xml;q=0.9,*/*;q=0.5',
+ 'user-agent':'Mozilla/5.0 (compatible; LZ-Market-Notes/1.0; +https://github.com/zhaotools/LZ-Market-Notes)'
+};
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+const usableFeed=xml=>/<feed(?:\s|>)/.test(String(xml))&&/<entry>[\s\S]*?<\/entry>/.test(String(xml));
 export const inferCategory=title=>/定投|系统|教程|工具|指标|DCA|Status/i.test(title)?'系统教程':'市场观察';
 const youtubeExclusions=site=>{
  const ids=site.youtubeExcludedVideoIds??[];
@@ -41,17 +47,44 @@ export function parseYoutubeFeed(xml,site,previous,{syncedAt=new Date().toISOStr
   note:'通过 YouTube 官方公开 RSS 同步最近公开视频。RSS 不提供完整历史、时长或嵌入权限；配置 Data API 密钥后可同步完整公开视频目录并核验这些字段。',items};
  validateContent(next,'videos');return next;
 }
+export async function fetchYoutubeFeed(source,{fetchImpl=fetch,waitImpl=wait,delays=[0,3000,10000,25000],timeout=20000,onRetry=message=>console.warn(message)}={}){
+ let lastError='unknown error';
+ for(let index=0;index<delays.length;index++){
+  if(delays[index]>0)await waitImpl(delays[index]);
+  try{
+   const response=await fetchImpl(source,{headers:rssHeaders,redirect:'follow',signal:AbortSignal.timeout(timeout)});
+   if(response.ok){
+    const xml=await response.text();
+    if(usableFeed(xml))return xml;
+    lastError='response did not contain a usable Atom feed';
+   }else lastError=`HTTP ${response.status}`;
+  }catch(error){lastError=error instanceof Error?`${error.name}: ${error.message}`:String(error);}
+  if(index<delays.length-1)onRetry(`YouTube RSS attempt ${index+1}/${delays.length} failed (${lastError}); retrying after ${delays[index+1]}ms.`);
+ }
+ throw new Error(`YouTube RSS fetch failed after ${delays.length} attempts (${lastError}).`);
+}
+async function fetchYoutubeFeedWithCurl(source){
+ try{
+  const {stdout}=await execFileAsync('curl',['--location','--fail','--silent','--show-error','--ipv4',
+   '--retry','5','--retry-all-errors','--retry-delay','5','--retry-max-time','120',
+   '--connect-timeout','15','--max-time','150','--header',`Accept: ${rssHeaders.accept}`,
+   '--user-agent',rssHeaders['user-agent'],source],{encoding:'utf8',maxBuffer:5*1024*1024});
+  if(!usableFeed(stdout))throw new Error('curl response did not contain a usable Atom feed');
+  return stdout;
+ }catch(error){
+  const detail=compact(error?.stderr||error?.message||'unknown curl error').slice(0,240);
+  throw new Error(`YouTube RSS curl fallback failed after retries (${detail}).`);
+ }
+}
 async function syncYoutubeRSS(site,previous){
  if(!/^UC[\w-]{22}$/.test(site.youtubeChannelId||''))throw new Error('Set the verified youtubeChannelId in site.json; videos.json was preserved.');
  const source=`https://www.youtube.com/feeds/videos.xml?channel_id=${site.youtubeChannelId}`;
  let xml='';
- try{
-  const response=await fetch(source,{headers:{accept:'application/atom+xml,application/xml;q=0.9'},signal:AbortSignal.timeout(12000)});
-  if(response.ok)xml=await response.text();
- }catch{}
- if(!xml){
-  try{({stdout:xml}=await execFileAsync('curl',['-L','--fail','--silent','--show-error','--max-time','20',source],{encoding:'utf8',maxBuffer:5*1024*1024}));}
-  catch{throw new Error('YouTube RSS request failed; videos.json was preserved.');}
+ try{xml=await fetchYoutubeFeed(source);}
+ catch(error){
+  console.warn(`${error.message} Falling back to curl with IPv4 and transport retries.`);
+  try{xml=await fetchYoutubeFeedWithCurl(source);}
+  catch(fallbackError){throw new Error(`${fallbackError.message} videos.json was preserved.`);}
  }
  const next=parseYoutubeFeed(xml,site,previous);
  if(JSON.stringify(previous)===JSON.stringify({...next,lastSyncedAt:previous.lastSyncedAt})){
