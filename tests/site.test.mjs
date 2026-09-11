@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import vm from 'node:vm';
 import {readJSON,validateMarket,validateContent,esc,safeURL,safeAssetPath,root} from '../scripts/lib.mjs';
-import {renderers,pageHTML} from '../scripts/templates.mjs';
+import {renderers,pageHTML,nav} from '../scripts/templates.mjs';
 import {normalizeMarket} from '../scripts/sync-market.mjs';
 import {inferCategory,parseYoutubeFeed} from '../scripts/sync-youtube.mjs';
 import {inferArticleCategory,parseWechatFeed} from '../scripts/sync-wechat.mjs';
@@ -59,8 +59,15 @@ test('pending article and video samples remain explicitly labelled',()=>{
  assert.ok(!h.includes('youtube.com/watch?v=null'));assert.ok(!h.includes('实时行情'));
 });
 test('all six pages render semantic main content and shared navigation',()=>{
+ assert.deepEqual(nav.map(([page])=>page),['index','market','articles','videos','tools','about']);
  for(const [name,render]of Object.entries(renderers)){
   const html=pageHTML(name,data,render(data));assert.ok(html.includes('lang="zh-CN"'));assert.ok(html.includes('<main id="main">'));assert.ok(html.includes('aria-current="page"'));assert.ok(html.includes('noindex,nofollow'));
+  if(name!=='index')assert.ok(html.includes(`page-intro-art-${name}`));
+ }
+});
+test('detail-page actions sit beneath their themed intro artwork',()=>{
+ for(const page of ['market','articles','videos','tools']){
+  const html=renderers[page](data);assert.ok(html.indexOf(`page-intro-art-${page}`)<html.indexOf('page-intro-action'));
  }
 });
 test('malicious content cannot break out of embedded JSON scripts',()=>{
