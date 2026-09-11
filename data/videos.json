@@ -1,12 +1,28 @@
 {
   "schemaVersion": 1,
   "status": "synced-public-rss",
-  "lastSyncedAt": "2026-09-10T18:38:16.687Z",
+  "lastSyncedAt": "2026-09-11T02:22:18.983Z",
   "channelId": "UCSk0Q0f1xvfyRQCxiFlfNWg",
   "channelTitle": "老赵市场观察",
   "sourceUrl": "https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg",
   "note": "通过 YouTube 官方公开 RSS 同步最近公开视频。RSS 不提供完整历史、时长或嵌入权限；配置 Data API 密钥后可同步完整公开视频目录并核验这些字段。",
   "items": [
+    {
+      "id": "OKxgjpSEEqg",
+      "youtubeId": "OKxgjpSEEqg",
+      "title": "老赵市场观察｜线下活动｜2026-09-05",
+      "summary": "主题： 1、方法论，我的投资决策树 2、案例分析，我是怎么捕捉机会的 3、产品介绍，系统化的投资工具箱",
+      "category": "市场观察",
+      "editorialCategory": null,
+      "coverTitle": "老赵市场观察｜线下活动｜2026-09-05",
+      "theme": "cross",
+      "url": "https://www.youtube.com/watch?v=OKxgjpSEEqg",
+      "thumbnail": "https://i.ytimg.com/vi/OKxgjpSEEqg/hqdefault.jpg",
+      "publishedAt": "2026-09-10T18:58:28+00:00",
+      "duration": null,
+      "embeddable": null,
+      "status": "published"
+    },
     {
       "id": "OdzO84ToAlM",
       "youtubeId": "OdzO84ToAlM",

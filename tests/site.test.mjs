@@ -39,7 +39,7 @@ test('production content and public URL are release-ready',()=>{
  assert.equal(current.site.wechatQr,'assets/wechat-qr.jpg');
  assert.equal(current.articles.items.length,5);
  assert.ok(current.articles.items.every(x=>x.status==='published'));
- assert.equal(current.videos.items.length,4);
+ assert.equal(current.videos.items.length,5);
 });
 test('stage counts must match actual public asset samples',()=>{
  const x=structuredClone(data.market);x.interpretation.stageCounts.S2++;
