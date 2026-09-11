@@ -51,7 +51,7 @@
  function market(code){const m=D.market.markets.find(x=>x.code===code);if(!m)return;
   const obs=m.observationStage!==m.subStage&&m.observationStage!==m.stage?`观察阶段 ${m.observationStage}，尚未替代确认阶段 ${m.stage}。`:'请结合资产属性理解阶段含义，不将阶段转换视为收益保证。';
   const fields=[['确认阶段',`${names[m.stage]} ${m.stage}`],['子阶段',m.subStage],['阶段持续',`${m.weeks} 周`],['市场类别',m.region],['阶段口径日期',date(m.stageAsOf)],['行情日期',date(m.marketAsOf)],['来源状态描述',m.stageDetail],['快照生成日期',date(D.market.generatedAt)]];
-  show(m.name,`<p>${e(m.symbol||m.code)} · LZ-4Stage Map 公开数据快照</p><dl class="detail-list">${fields.map(([k,v])=>`<div><dt>${e(k)}</dt><dd>${e(v)}</dd></div>`).join('')}</dl><div class="dialog-note">${e(obs)}${m.completedThrough?` 加密周线起始日期为 ${date(m.stageAsOf)}，已完成至 ${date(m.completedThrough)}；不要误读为阶段在前一个日期就已确认。`:''}<br>阶段持续时间不是完成度。数据仅用于辅助观察，不构成投资建议。</div><div class="dialog-actions">${link(D.site.mapUrl,'在 Map 中继续查看','button primary')}<button class="button secondary" data-close>关闭详情</button></div>`,'MARKET / 数据与口径');
+  show(m.name,`<p>${e(m.symbol||m.code)} · LZ-Map 公开数据快照</p><dl class="detail-list">${fields.map(([k,v])=>`<div><dt>${e(k)}</dt><dd>${e(v)}</dd></div>`).join('')}</dl><div class="dialog-note">${e(obs)}${m.completedThrough?` 加密周线起始日期为 ${date(m.stageAsOf)}，已完成至 ${date(m.completedThrough)}；不要误读为阶段在前一个日期就已确认。`:''}<br>阶段持续时间不是完成度。数据仅用于辅助观察，不构成投资建议。</div><div class="dialog-actions">${link(D.site.mapUrl,'在 Map 中继续查看','button primary')}<button class="button secondary" data-close>关闭详情</button></div>`,'MARKET / 数据与口径');
  }
  function bindFilters(root){
   if(root.dataset.bound)return;root.dataset.bound='true';
