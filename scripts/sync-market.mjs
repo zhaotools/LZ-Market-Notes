@@ -6,6 +6,8 @@ const SOURCES=[
  'https://raw.githubusercontent.com/zhaotools/LZ-4Stage-Map/main/data/dashboard.json'
 ];
 const symbols={'GSPC.INDEX':'SPX','000300.SH':'CSI300','BTC-USD':'BTC','ETH-USD':'ETH',NDQ:'NDX',XAU:'GOLD',CL:'WTI',STOXX50E:'SX5E',SZ399006:'399006'};
+const stageKeys=['S1','S2','S3','S4'];
+const cleanCounts=value=>Object.fromEntries(stageKeys.map(stage=>[stage,Number.isInteger(value?.[stage])?value[stage]:0]));
 export function normalizeMarket(raw,sourceUrl){
  if(!raw?.markets?.length || raw.interpretation?.viewKey!=='global')throw new Error('Missing public/global snapshot');
  const markets=raw.markets.filter(m=>m.collections?.includes('global')).map(m=>({
@@ -15,13 +17,30 @@ export function normalizeMarket(raw,sourceUrl){
   completedThrough:m.cryptoQuality?.completedThrough||null,collections:['global']
  }));
  const i=raw.interpretation;
+ const publicCodes=new Set(markets.map(m=>m.code));
+ const cleanAsset=x=>({code:x.code,name:x.name,subStage:x.subStage??null,weeks:Number.isInteger(x.weeks)?x.weeks:null});
+ const cleanChange=x=>({code:x.code,name:x.name,fromStage:x.fromStage,toStage:x.toStage});
  return validateMarket({schemaVersion:'lz-notes-public-market-v1',snapshotType:'public-snapshot',
   generatedAt:raw.generatedAt,syncedAt:new Date().toISOString(),commonStageAsOf:raw.commonStageAsOf,
   analysisPeriod:raw.analysisPeriod,sourceUrl,sourceBlobSha:null,
   sourceNote:'仅同步来源中已公开的全球样本；快照生成时间不等于阶段确认日期。',markets,
-  interpretation:{viewKey:'global',generatedAt:i.generatedAt,commonStageAsOf:i.commonStageAsOf,
+  interpretation:{schemaVersion:i.schemaVersion??null,viewKey:'global',mode:i.mode??null,
+   generatedAt:i.generatedAt,commonStageAsOf:i.commonStageAsOf,
    sourceSnapshotSha256:i.sourceSnapshotSha256,universeSize:i.universeSize,analyzedSize:i.analyzedSize,
-   excludedSize:i.excludedSize,stageCounts:i.stageCounts,headline:i.headline,summary:i.summary,
+   excludedSize:i.excludedSize,stageCounts:cleanCounts(i.stageCounts),
+   previousStageCounts:i.previousStageCounts?cleanCounts(i.previousStageCounts):null,
+   stageDistribution:(i.stageDistribution||[]).filter(x=>stageKeys.includes(x.stage)).map(x=>({
+    stage:x.stage,season:x.season,count:x.count,percent:x.percent,delta:x.delta
+   })),
+   marketStructure:(i.marketStructure||[]).map(x=>({label:x.label,summary:x.summary,stageCounts:cleanCounts(x.stageCounts)})),
+   keyPositions:(i.keyPositions||[]).filter(x=>stageKeys.includes(x.stage)).map(x=>({
+    id:x.id,label:x.label,stage:x.stage,assets:(x.assets||[]).filter(a=>publicCodes.has(a.code)).map(cleanAsset)
+   })).filter(x=>x.assets.length),
+   confirmedChanges:(i.confirmedChanges||[]).filter(x=>publicCodes.has(x.code)).map(cleanChange),
+   observations:(i.observations||[]).filter(x=>publicCodes.has(x.code)).map(x=>({
+    ...cleanChange(x),status:x.status,progress:Number.isFinite(x.progress)?x.progress:null
+   })),
+   headline:i.headline,summary:i.summary,
    insights:(i.insights||[]).map(x=>({id:x.id,label:x.label,text:x.text})),note:i.note}
  });
 }

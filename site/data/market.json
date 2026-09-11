@@ -1,8 +1,8 @@
 {
   "schemaVersion": "lz-notes-public-market-v1",
   "snapshotType": "public-snapshot",
-  "generatedAt": "2026-09-10T04:15:53.783Z",
-  "syncedAt": "2026-09-10T16:54:21.455Z",
+  "generatedAt": "2026-09-11T12:49:18.538Z",
+  "syncedAt": "2026-09-11T15:21:57.985Z",
   "commonStageAsOf": "2026-08-31",
   "analysisPeriod": "weekly-completed-bars",
   "sourceUrl": "https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json",
@@ -20,7 +20,7 @@
       "stageDetail": "趋势减速",
       "observationStage": "S2",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-09",
+      "marketAsOf": "2026-09-10",
       "completedThrough": null,
       "collections": [
         "global"
@@ -37,7 +37,7 @@
       "stageDetail": "趋势减速",
       "observationStage": "S2B-",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-09",
+      "marketAsOf": "2026-09-10",
       "completedThrough": null,
       "collections": [
         "global"
@@ -54,7 +54,7 @@
       "stageDetail": "下降减速",
       "observationStage": "S4",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-09",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -71,7 +71,7 @@
       "stageDetail": "正常下降",
       "observationStage": "S4",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-10",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -88,7 +88,7 @@
       "stageDetail": "下降减速",
       "observationStage": "S4",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-10",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -105,7 +105,7 @@
       "stageDetail": "趋势减速",
       "observationStage": "S2B-",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-10",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -122,7 +122,7 @@
       "stageDetail": "趋势减速",
       "observationStage": "S2-",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-09",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -139,7 +139,7 @@
       "stageDetail": "筑底阶段",
       "observationStage": "S1",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-10",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -156,7 +156,7 @@
       "stageDetail": "正常推进",
       "observationStage": "S2",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-09",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -173,7 +173,7 @@
       "stageDetail": "趋势减速",
       "observationStage": "S2",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-10",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -190,7 +190,7 @@
       "stageDetail": "下降减速",
       "observationStage": "S4-",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-10",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -241,7 +241,7 @@
       "stageDetail": "趋势减速",
       "observationStage": "S2",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-09",
+      "marketAsOf": "2026-09-10",
       "completedThrough": null,
       "collections": [
         "global"
@@ -258,7 +258,7 @@
       "stageDetail": "→S1筑底观察",
       "observationStage": "S1",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-10",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -275,7 +275,7 @@
       "stageDetail": "筑顶阶段",
       "observationStage": "S3",
       "stageAsOf": "2026-09-04",
-      "marketAsOf": "2026-09-10",
+      "marketAsOf": "2026-09-11",
       "completedThrough": null,
       "collections": [
         "global"
@@ -283,10 +283,12 @@
     }
   ],
   "interpretation": {
+    "schemaVersion": "lz-market-interpretation-v2",
     "viewKey": "global",
-    "generatedAt": "2026-09-10T04:15:53.783Z",
+    "mode": "system",
+    "generatedAt": "2026-09-11T12:49:18.538Z",
     "commonStageAsOf": "2026-08-31",
-    "sourceSnapshotSha256": "2828c368284975cb41afd3e8b536d9ad7fc38998c12f5fff6515ed01b5303960",
+    "sourceSnapshotSha256": "7c418e445064fa139a6b7e5735691d627938e5875ea417e99c3b72b23d32417f",
     "universeSize": 16,
     "analyzedSize": 16,
     "excludedSize": 0,
@@ -296,23 +298,234 @@
       "S3": 1,
       "S4": 5
     },
-    "headline": "全球市场以S2上升阶段为主",
-    "summary": "S2资产占9/16，上升结构占比较高；同时仍有5个资产处于S4，市场并非同步运行。",
-    "insights": [
+    "previousStageCounts": {
+      "S1": 1,
+      "S2": 8,
+      "S3": 1,
+      "S4": 6
+    },
+    "stageDistribution": [
       {
-        "id": "structure",
-        "label": "阶段结构",
-        "text": "16个有效资产中，S1 1个、S2 9个、S3 1个、S4 5个。"
+        "stage": "S1",
+        "season": "春季",
+        "count": 1,
+        "percent": 6,
+        "delta": 0
       },
+      {
+        "stage": "S2",
+        "season": "夏季",
+        "count": 9,
+        "percent": 56,
+        "delta": 1
+      },
+      {
+        "stage": "S3",
+        "season": "秋季",
+        "count": 1,
+        "percent": 6,
+        "delta": 0
+      },
+      {
+        "stage": "S4",
+        "season": "冬季",
+        "count": 5,
+        "percent": 31,
+        "delta": -1
+      }
+    ],
+    "marketStructure": [
+      {
+        "label": "美股",
+        "summary": "S2为主",
+        "stageCounts": {
+          "S1": 0,
+          "S2": 3,
+          "S3": 0,
+          "S4": 1
+        }
+      },
+      {
+        "label": "A股",
+        "summary": "S3 / S4分化",
+        "stageCounts": {
+          "S1": 0,
+          "S2": 0,
+          "S3": 1,
+          "S4": 1
+        }
+      },
+      {
+        "label": "港股",
+        "summary": "S4为主",
+        "stageCounts": {
+          "S1": 0,
+          "S2": 0,
+          "S3": 0,
+          "S4": 2
+        }
+      },
+      {
+        "label": "日股",
+        "summary": "S2为主",
+        "stageCounts": {
+          "S1": 0,
+          "S2": 1,
+          "S3": 0,
+          "S4": 0
+        }
+      },
+      {
+        "label": "欧股",
+        "summary": "S2为主",
+        "stageCounts": {
+          "S1": 0,
+          "S2": 1,
+          "S3": 0,
+          "S4": 0
+        }
+      },
+      {
+        "label": "大宗·宏观",
+        "summary": "S2较多",
+        "stageCounts": {
+          "S1": 1,
+          "S2": 2,
+          "S3": 0,
+          "S4": 1
+        }
+      },
+      {
+        "label": "加密",
+        "summary": "S2为主",
+        "stageCounts": {
+          "S1": 0,
+          "S2": 2,
+          "S3": 0,
+          "S4": 0
+        }
+      }
+    ],
+    "keyPositions": [
+      {
+        "id": "s2Early",
+        "label": "S2早期",
+        "stage": "S2",
+        "assets": [
+          {
+            "code": "BTC-USD",
+            "name": "比特币",
+            "subStage": "S2A",
+            "weeks": 1
+          },
+          {
+            "code": "ETH-USD",
+            "name": "以太坊",
+            "subStage": "S2A",
+            "weeks": 1
+          }
+        ]
+      },
+      {
+        "id": "s2Late",
+        "label": "S2后期",
+        "stage": "S2",
+        "assets": [
+          {
+            "code": "SOXX",
+            "name": "iShares半导体ETF",
+            "subStage": "S2B-",
+            "weeks": 64
+          },
+          {
+            "code": "N225",
+            "name": "日经225指数",
+            "subStage": "S2B-",
+            "weeks": 62
+          },
+          {
+            "code": "STOXX50E",
+            "name": "欧洲STOXX 50指数",
+            "subStage": "S2-",
+            "weeks": 12
+          }
+        ]
+      },
+      {
+        "id": "s4Early",
+        "label": "S4早期",
+        "stage": "S4",
+        "assets": [
+          {
+            "code": "SZ399006",
+            "name": "创业板指",
+            "subStage": "S4A",
+            "weeks": 1
+          }
+        ]
+      },
+      {
+        "id": "s4Late",
+        "label": "S4后期",
+        "stage": "S4",
+        "assets": [
+          {
+            "code": "XAU",
+            "name": "黄金（COMEX期货代理）",
+            "subStage": "S4-",
+            "weeks": 10
+          },
+          {
+            "code": "HSI",
+            "name": "恒生指数",
+            "subStage": "S4-",
+            "weeks": 11
+          }
+        ]
+      }
+    ],
+    "confirmedChanges": [
+      {
+        "code": "SZ399006",
+        "name": "创业板指",
+        "fromStage": "S2",
+        "toStage": "S4"
+      },
+      {
+        "code": "BTC-USD",
+        "name": "比特币",
+        "fromStage": "S4",
+        "toStage": "S2"
+      },
+      {
+        "code": "ETH-USD",
+        "name": "以太坊",
+        "fromStage": "S4",
+        "toStage": "S2"
+      }
+    ],
+    "observations": [
+      {
+        "code": "HSI",
+        "name": "恒生指数",
+        "fromStage": "S4",
+        "toStage": "S1",
+        "status": "continuing",
+        "progress": null
+      }
+    ],
+    "headline": "S2 夏季占优，但市场分化明显",
+    "summary": "16个代表资产中，9个处于S2（56%）；5个处于S4（31%）。",
+    "insights": [
       {
         "id": "maturity",
         "label": "趋势位置",
         "text": "比特币、以太坊处于S2早期；iShares半导体ETF、日经225指数、欧洲STOXX 50指数处于S2后期或减速段；创业板指处于S4早期；黄金（COMEX期货代理）、恒生指数处于S4后期或减速段。"
       },
       {
-        "id": "observation",
-        "label": "本周观察",
-        "text": "恒生指数由确认S4转向S1观察。观察信号尚未等同于阶段确认。"
+        "id": "change",
+        "label": "本期变化",
+        "text": "已确认：创业板指 S2→S4、比特币 S4→S2、以太坊 S4→S2；观察：恒生指数 S4→S1观察（延续）。观察信号尚未等同于阶段确认。"
       },
       {
         "id": "divergence",

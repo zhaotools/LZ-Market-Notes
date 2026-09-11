@@ -31,6 +31,24 @@ export function validateMarket(data) {
  }
  if(data.interpretation.analyzedSize!==data.markets.length) throw new Error('analyzedSize mismatch');
  for(const s of Object.keys(counts)){if(data.interpretation.stageCounts?.[s]!==counts[s]) throw new Error('Stage count mismatch');}
+ const publicCodes=new Set(data.markets.map(m=>m.code));
+ const distribution=data.interpretation.stageDistribution||[];
+ if(distribution.length){
+  if(distribution.length!==4||new Set(distribution.map(x=>x.stage)).size!==4)throw new Error('Invalid stage distribution');
+  for(const x of distribution){
+   if(!stages[x.stage]||x.count!==counts[x.stage]||!Number.isInteger(x.percent)||x.percent<0||x.percent>100||!Number.isInteger(x.delta))throw new Error('Invalid stage distribution');
+  }
+ }
+ for(const row of data.interpretation.marketStructure||[]){
+  if(!row.label||!row.summary||Object.keys(counts).some(stage=>!Number.isInteger(row.stageCounts?.[stage])||row.stageCounts[stage]<0))throw new Error('Invalid market structure');
+ }
+ for(const group of data.interpretation.keyPositions||[]){
+  if(!group.id||!group.label||!stages[group.stage]||!Array.isArray(group.assets)||!group.assets.length)throw new Error('Invalid key positions');
+  for(const asset of group.assets){if(!publicCodes.has(asset.code)||!asset.name)throw new Error('Non-public interpretation asset');}
+ }
+ for(const item of [...(data.interpretation.confirmedChanges||[]),...(data.interpretation.observations||[])]){
+  if(!publicCodes.has(item.code)||!stages[item.fromStage]||!stages[item.toStage])throw new Error('Invalid interpretation change');
+ }
  return data;
 }
 export function validateContent(data, type) {

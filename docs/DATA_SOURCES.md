@@ -30,11 +30,11 @@ YouTube 已核验 `@lzmarketwatch` 对应频道“老赵市场观察”，频道
 
 https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json
 
-源 generatedAt：2026-09-10T04:15:53.783Z
+源 generatedAt：2026-09-11T12:49:18.538Z
 
-源 interpretation.sourceSnapshotSha256：2828c368284975cb41afd3e8b536d9ad7fc38998c12f5fff6515ed01b5303960
+源 interpretation.sourceSnapshotSha256：7c418e445064fa139a6b7e5735691d627938e5875ea417e99c3b72b23d32417f
 
-同步脚本只保留其中 16 个 `global` 公开资产的展示字段和 interpretation；不包含价格、收益率计算、会员数据或算法代码。
+同步脚本只保留其中 16 个 `global` 公开资产的展示字段和公开 interpretation v2；结构化解读包含阶段占比、市场结构、关键位置、已确认变化和观察变化，不包含价格、收益率计算、会员数据或算法代码。
 
 计数：S1 1 个，S2 9 个，S3 1 个，S4 5 个。计数之和为 16，用于描述样本结构，不代表配置权重或整个市场的覆盖比例。
 

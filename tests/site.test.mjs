@@ -78,6 +78,21 @@ test('public synchronization strips non-public assets and unrelated fields',()=>
  const d=structuredClone(data.market);d.markets[0].privateKey='secret';d.markets.push({...d.markets[0],code:'PRIVATE',collections:['member']});
  const n=normalizeMarket(d,'https://example.com/public.json');assert.equal(n.markets.length,16);assert.equal(n.markets[0].privateKey,undefined);
 });
+test('structured Map interpretation v2 is preserved and rendered without private assets',()=>{
+ const d=structuredClone(data.market),codes=d.markets.map(x=>x.code);
+ d.interpretation.schemaVersion='lz-market-interpretation-v2';
+ d.interpretation.stageDistribution=['S1','S2','S3','S4'].map(stage=>({stage,season:{S1:'春季',S2:'夏季',S3:'秋季',S4:'冬季'}[stage],count:d.interpretation.stageCounts[stage],percent:Math.round(d.interpretation.stageCounts[stage]/16*100),delta:stage==='S2'?1:stage==='S4'?-1:0}));
+ d.interpretation.marketStructure=[{label:'美股',summary:'S2为主',stageCounts:{S1:0,S2:3,S3:0,S4:1}}];
+ d.interpretation.keyPositions=[{id:'s2Early',label:'S2早期',stage:'S2',assets:[{code:codes[0],name:d.markets[0].name},{code:'PRIVATE',name:'私有资产'}]}];
+ d.interpretation.confirmedChanges=[{code:codes[0],name:d.markets[0].name,fromStage:'S4',toStage:'S2'}];
+ d.interpretation.observations=[];
+ d.interpretation.headline='S2 夏季占优，但市场分化明显';
+ d.interpretation.summary='16个代表资产中，9个处于S2（56%）；5个处于S4（31%）。';
+ const n=normalizeMarket(d,'https://example.com/public.json'),html=renderers.market({...data,market:n});
+ assert.equal(n.interpretation.keyPositions[0].assets.length,1);
+ for(const text of ['全球市场阶段解读','市场结构','关键位置','本期变化','阶段净变化：S2 +1｜S4 -1'])assert.ok(html.includes(text));
+ assert.ok(!html.includes('私有资产'));assert.ok(!html.includes('来源快照原文'));
+});
 test('headline follows dominant stage rather than hardcoding summer',()=>{
  const d=structuredClone(data);d.market.interpretation.stageCounts={S1:0,S2:0,S3:0,S4:16};
  const h=renderers.market(d);assert.ok(h.includes('冬季资产占比较高'));assert.ok(h.includes('持续关注阶段变化'));
