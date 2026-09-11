@@ -95,7 +95,7 @@ Map 可以运行 `npm run sync:market`。脚本只尝试公开 JSON，校验 `gl
 
 个人订阅号没有微信官方“获取已发布文章列表”接口权限。`npm run sync:wechat` 从 GitHub Actions Secret `WECHAT_FEED_URL` 读取一次性配置的第三方 RSS/Atom Feed，只接受 `mp.weixin.qq.com` 原文链接并合并到已有目录；Feed URL、登录信息与文章正文都不会写入仓库或网站。未配置 Feed 时保留现有文章快照。
 
-GitHub Actions 每天北京时间 09:17 和 21:17 自动同步 YouTube RSS、Map 公开快照和已配置的公众号 Feed。同步脚本只有在目录或上游快照发生实际变化时才改写文件；通过构建、测试和正式发布检查后，工作流提交 `data/` 与对应生成页面，并在同一次运行中部署 Pages。任一来源失败时不会清空已有内容，也不会发布未经验证的结果。
+GitHub Actions 每天北京时间 09:17 和 21:17 自动同步 YouTube RSS、Map 公开快照和已配置的公众号 Feed，并在 10:07 进行一次早间低频补偿重试。同步脚本只有在目录或上游快照发生实际变化时才改写文件；通过构建、测试和正式发布检查后，工作流提交 `data/` 与对应生成页面，并在同一次运行中部署 Pages。补偿运行没有新内容时不会提交或部署；任一来源失败时不会清空已有内容，也不会发布未经验证的结果。
 
 ## GitHub Pages 发布准备
 
