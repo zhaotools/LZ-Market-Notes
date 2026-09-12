@@ -129,7 +129,7 @@ test('requested four-season labels are scoped to their pages and Map URL stays u
  for(const text of ['全球市场四季看板','全球市场四季解读'])assert.ok(marketHTML.includes(text));
  assert.ok(!marketHTML.includes('观察信号尚未等同于阶段确认。'));
  for(const text of ['LZ-4Stage Map','查看四季地图','https://zhaotools.github.io/LZ-4Stage-Map/'])assert.ok(toolsHTML.includes(text));
- assert.ok(homeHTML.includes('<h3>LZ-Map</h3>'));
+ assert.ok(homeHTML.includes('<h3>LZ-4Stage Map</h3>'));
 });
 test('headline follows dominant stage rather than hardcoding summer',()=>{
  const d=structuredClone(data);d.market.interpretation.stageCounts={S1:0,S2:0,S3:0,S4:16};
