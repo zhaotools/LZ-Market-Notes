@@ -8,15 +8,17 @@
 - Map：https://zhaotools.github.io/LZ-4Stage-Map/
 - 工具箱：https://zhaotools.github.io/LZ-Market-Toolkit/
 
-公众号目录由用户提供原文链接，并于 2026-09-11 逐页核验页面元数据。5 篇页面均显示公众号“老赵市场笔记”，标题、日期和摘要已写入 `data/articles.json`：
+公众号目录由用户提供原文链接。前 5 篇于 2026-09-11 逐页核验页面元数据；新增 2 篇于 2026-09-12 通过用户提供的原文顶部截图核验公众号、标题、发布日期及链接对应关系。共 7 篇正式条目已写入 `data/articles.json`：
 
+- 2026-09-12：[当下折叠屏的最优解：iPhone 17 + Vivo X Fold6，不是iPhone Duo](https://mp.weixin.qq.com/s/ns51z1cjpt3Dl8I2HzuyBw)
+- 2026-09-11：[老赵市场工具箱官网2.0上线：让投资决策更有章法](https://mp.weixin.qq.com/s/UtcaIYeRgVDHt1dE_P3NJw)
 - 2026-09-06：[养成了一个好习惯：每天跟AI聊天](https://mp.weixin.qq.com/s/nFVimLo5FUBodxvXrMr-9g)
 - 2026-09-05：[2026年8月复盘：把方法变成系统，把系统变成产品](https://mp.weixin.qq.com/s/Zy5BqgP448L2bcmXb8_WrQ)
 - 2026-09-01：[读《长赢》：投资要看季节，不要被天气带走](https://mp.weixin.qq.com/s/uOqKpTflbC8wM2KWo0b8sg)
 - 2026-08-29：[大资金和大多数](https://mp.weixin.qq.com/s/KdUiWFxqn-Gm3vin6w0JUA)
 - 2026-08-28：[为什么趋势投资更适合普通投资者，成功概率高于价值投资？](https://mp.weixin.qq.com/s/j9WVATPxktg4GHy9rIMTIg)
 
-本站不抓取或保存正文。文章摘要使用公众号页面公开的 `og:description`；分类和标签是本站目录编辑字段。
+本站不抓取或保存正文。前 5 篇摘要使用公众号页面公开的 `og:description`；新增 2 篇使用基于截图可核验主题撰写的目录摘要。分类和标签是本站目录编辑字段。
 
 公众号二维码来自用户提供的 `IMG_1450.JPG`，原样保存为 `assets/wechat-qr.jpg`，尺寸 430×430，SHA-256 为 `0b186f8859ec8f064908d214450ef1e10ade8d72bb3389fd057b5683b693e43a`。
 

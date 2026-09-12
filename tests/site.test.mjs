@@ -46,8 +46,10 @@ test('production content and public URL are release-ready',()=>{
  assert.equal(current.site.baseUrl,'https://zhaotools.github.io/LZ-Market-Notes/');
  assert.equal(current.site.previewMode,false);
  assert.equal(current.site.wechatQr,'assets/wechat-qr.jpg');
- assert.equal(current.articles.items.length,5);
+ assert.equal(current.articles.items.length,7);
  assert.ok(current.articles.items.every(x=>x.status==='published'));
+ assert.equal(current.articles.items.find(x=>x.id==='foldable-screen-best-solution')?.url,'https://mp.weixin.qq.com/s/ns51z1cjpt3Dl8I2HzuyBw');
+ assert.equal(current.articles.items.find(x=>x.id==='market-toolkit-website-2-launch')?.url,'https://mp.weixin.qq.com/s/UtcaIYeRgVDHt1dE_P3NJw');
  assert.equal(current.videos.items.length,5);
 });
 test('stage counts must match actual public asset samples',()=>{

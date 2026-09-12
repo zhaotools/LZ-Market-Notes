@@ -1,9 +1,41 @@
 {
   "schemaVersion": 1,
   "status": "verified-manual-directory",
-  "lastImportedAt": "2026-09-11T00:50:00+08:00",
-  "note": "5 篇正式条目已人工核验公众号名称、标题、发布日期、页面摘要与 mp.weixin.qq.com 原文 URL；本站只保存目录和摘要，不搬运正文。",
+  "lastImportedAt": "2026-09-12T22:42:12+08:00",
+  "note": "7 篇正式条目已人工核验公众号名称、标题、发布日期、页面摘要与 mp.weixin.qq.com 原文 URL；本站只保存目录和摘要，不搬运正文。",
   "items": [
+    {
+      "id": "foldable-screen-best-solution",
+      "category": "市场观察",
+      "title": "当下折叠屏的最优解：iPhone 17 + Vivo X Fold6，不是iPhone Duo",
+      "summary": "从 iPhone 17 与 Vivo X Fold6 的组合出发，讨论折叠屏手机的实用选择与未来趋势。",
+      "date": "2026-09-12",
+      "theme": "market",
+      "tags": [
+        "折叠屏",
+        "iPhone",
+        "Vivo"
+      ],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s/ns51z1cjpt3Dl8I2HzuyBw",
+      "status": "published"
+    },
+    {
+      "id": "market-toolkit-website-2-launch",
+      "category": "工具使用",
+      "title": "老赵市场工具箱官网2.0上线：让投资决策更有章法",
+      "summary": "介绍老赵市场工具箱官网 2.0，以及如何用系统化工具让投资决策更有章法。",
+      "date": "2026-09-11",
+      "theme": "toolkit",
+      "tags": [
+        "工具箱",
+        "投资决策",
+        "产品"
+      ],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s/UtcaIYeRgVDHt1dE_P3NJw",
+      "status": "published"
+    },
     {
       "id": "daily-ai-chat",
       "category": "AI 实践",
