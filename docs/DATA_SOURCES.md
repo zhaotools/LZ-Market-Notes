@@ -40,7 +40,7 @@ https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json
 
 传统资产 stageAsOf 为 2026-09-04；加密样本 stageAsOf 为 2026-08-31，cryptoQuality.completedThrough 为 2026-09-06。它们来自上游周线的日期口径，不能把周线起始日误解为实际发生确认的时刻。本版统一显示“阶段口径日期”，并保留加密完成日期说明。
 
-GitHub Pages 公开 JSON 已返回 HTTP 200，`npm run sync:market` 已成功写入经过结构、范围、计数与时间校验的本地快照；若 Pages 不可用，脚本仍会尝试公开 raw 文件。所有来源失败或源时间倒退时保留上一次成功快照。
+GitHub Pages 公开 JSON 已返回 HTTP 200。市场看板和首页打开时会直接请求该公开 JSON，只接受固定 HTTPS 来源，并校验 `global` 范围、结构、计数、资产集合与时间；成功后只在浏览器内替换现有卡片和公开解读。请求失败、数据未更新、结构异常或资产集合变化时继续显示随网站发布的已验证静态快照。`npm run sync:market` 仍负责归档静态备用快照；若 Pages 不可用，脚本会尝试公开 raw 文件，所有来源失败或源时间倒退时保留上一次成功快照。
 
 ## 工具箱
 
@@ -57,7 +57,7 @@ https://github.com/zhaotools/LZ-Market-Toolkit/blob/main/index.html
 GitHub Pages 工作流参考通过 GitHub 连接器读取的官方模板：
 https://github.com/actions/starter-workflows/blob/main/pages/static.yml
 
-工作流在北京时间 09:17 和 21:17 自动检查 YouTube RSS、Map 公开快照和已配置的公众号 Feed，并在 10:07 和 22:07 分别补偿重试。YouTube RSS 请求会先进行带超时与明确请求头的分级重试；仍失败时使用 IPv4 `curl` 对传输错误和临时 HTTP 错误继续重试，并输出不含凭据的错误摘要。只有实际内容变化才提交 `data/`、`site/` 与 `preview.html`；随后在同一次运行内完成 Pages 部署，避免依赖机器人提交再次触发工作流。同步后依次构建、测试并运行 `release:check`，通过后只上传 `site/`。2026-09-10 已按各 Action 官方最新稳定主版本更新为 checkout@v7、setup-node@v7、configure-pages@v6、upload-pages-artifact@v5 与 deploy-pages@v5。
+工作流在北京时间 09:17 和 21:17 自动检查 YouTube RSS、Map 静态备用快照和已配置的公众号 Feed，并在 10:07 和 22:07 分别补偿重试。YouTube RSS 请求会先进行带超时与明确请求头的分级重试；仍失败时使用 IPv4 `curl` 对传输错误和临时 HTTP 错误继续重试，并输出不含凭据的错误摘要。只有实际内容变化才提交 `data/`、`site/` 与 `preview.html`；随后在同一次运行内完成 Pages 部署，避免依赖机器人提交再次触发工作流。同步后依次构建、测试并运行 `release:check`，通过后只上传 `site/`。市场看板的在线读取不依赖该定时器。2026-09-10 已按各 Action 官方最新稳定主版本更新为 checkout@v7、setup-node@v7、configure-pages@v6、upload-pages-artifact@v5 与 deploy-pages@v5。
 
 无密钥路径采用 YouTube 官方公开 RSS：
 https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg

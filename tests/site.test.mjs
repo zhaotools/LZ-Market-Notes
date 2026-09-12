@@ -11,6 +11,15 @@ import {inferArticleCategory,parseWechatFeed} from '../scripts/sync-wechat.mjs';
 import {normalizeArticleImport} from '../scripts/import-articles.mjs';
 const data=JSON.parse(await readFile(resolve(root,'tests/fixtures/demo.json'),'utf8'));
 const current={site:await readJSON('site.json'),articles:await readJSON('articles.json'),videos:await readJSON('videos.json'),market:await readJSON('market.json')};
+const marketLiveSource=await readFile(resolve(root,'assets/market-live.js'),'utf8');
+const marketLiveContext=vm.createContext({URL,Date,AbortController,setTimeout,clearTimeout});
+new vm.Script(marketLiveSource).runInContext(marketLiveContext);
+const marketLive=marketLiveContext.LZMarketLive;
+function upstreamMarketFixture(){
+ const raw=structuredClone(current.market);raw.schemaVersion='lz-4stage-map-v2';delete raw.snapshotType;delete raw.syncedAt;
+ raw.markets=raw.markets.map(row=>{const next={...row};delete next.symbol;delete next.completedThrough;if(row.completedThrough)next.cryptoQuality={completedThrough:row.completedThrough};return next;});
+ return raw;
+}
 
 test('current datasets and stable design fixtures pass validation',()=>{
  validateMarket(current.market);validateContent(current.articles,'articles');validateContent(current.videos,'videos');
@@ -77,6 +86,25 @@ test('malicious content cannot break out of embedded JSON scripts',()=>{
 test('public synchronization strips non-public assets and unrelated fields',()=>{
  const d=structuredClone(data.market);d.markets[0].privateKey='secret';d.markets.push({...d.markets[0],code:'PRIVATE',collections:['member']});
  const n=normalizeMarket(d,'https://example.com/public.json');assert.equal(n.markets.length,16);assert.equal(n.markets[0].privateKey,undefined);
+});
+test('browser loads, sanitizes and accepts a newer public LZ-Map snapshot',async()=>{
+ const raw=upstreamMarketFixture(),requested=[];raw.generatedAt='2026-09-12T04:01:58.772Z';raw.interpretation.generatedAt=raw.generatedAt;
+ raw.markets[0].privateKey='secret';raw.markets.push({...raw.markets[0],code:'PRIVATE',collections:['member']});
+ const result=await marketLive.loadLatestMarket(current.market,{
+  sourceUrl:'https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json',now:'2026-09-12T04:02:00.000Z',
+  fetchImpl:async(url,options)=>{requested.push({url,options});return {ok:true,status:200,json:async()=>raw};}
+ });
+ assert.equal(result.changed,true);assert.equal(result.market.generatedAt,raw.generatedAt);assert.equal(result.market.syncedAt,'2026-09-12T04:02:00.000Z');
+ assert.equal(result.market.markets.length,current.market.markets.length);assert.equal(result.market.markets[0].privateKey,undefined);
+ assert.equal(requested[0].options.cache,'no-store');assert.equal(requested[0].options.headers.accept,'application/json');
+});
+test('browser live Map loader rejects bad sources and preserves the fallback on unchanged data',async()=>{
+ const raw=upstreamMarketFixture();
+ await assert.rejects(()=>marketLive.loadLatestMarket(current.market,{sourceUrl:'https://example.com/dashboard.json',fetchImpl:async()=>({ok:true,json:async()=>raw})}),/Unapproved/);
+ const unchanged=await marketLive.loadLatestMarket(current.market,{sourceUrl:'https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json',fetchImpl:async()=>({ok:true,status:200,json:async()=>raw})});
+ assert.equal(unchanged.changed,false);assert.equal(unchanged.market,current.market);
+ raw.interpretation.stageCounts.S2++;
+ await assert.rejects(()=>marketLive.loadLatestMarket(current.market,{sourceUrl:'https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json',fetchImpl:async()=>({ok:true,status:200,json:async()=>raw})}),/count mismatch/);
 });
 test('structured Map interpretation v2 is preserved and rendered without private assets',()=>{
  const d=structuredClone(data.market),codes=d.markets.map(x=>x.code);
@@ -145,7 +173,12 @@ test('manual article import requires verified original URLs and never copies bod
  assert.equal(next.items[0].status,'published');assert.equal(next.items[0].body,undefined);
  assert.throws(()=>normalizeArticleImport([{...incoming[0],url:'https://example.com/article'}],{items:[]}));
 });
-test('browser script compiles',async()=>{new vm.Script(await readFile(resolve(root,'assets/site.js'),'utf8'));});
+test('browser scripts compile and generated pages load the live Map sanitizer first',async()=>{
+ new vm.Script(marketLiveSource);new vm.Script(await readFile(resolve(root,'assets/site.js'),'utf8'));
+ const generated=await readFile(resolve(root,'site/market.html'),'utf8');
+ assert.ok(generated.indexOf('assets/market-live.js')<generated.indexOf('assets/site.js'));
+ for(const hook of ['data-market-snapshot','data-market-reading','data-market-note'])assert.ok(generated.includes(hook));
+});
 test('generated standalone inline script preserves double-dollar selectors',async()=>{
  const html=await readFile(resolve(root,'preview.html'),'utf8');
  const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(x=>x[1]);
