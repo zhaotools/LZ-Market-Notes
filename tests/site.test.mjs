@@ -133,7 +133,7 @@ test('requested four-season labels are scoped to their pages and Map URL stays u
  assert.ok(homeHTML.includes('<h3>LZ-4Stage Map</h3>'));
 });
 test('follow dialog shows personal WeChat copy entry without QR or privacy note',()=>{
- for(const text of ['个人微信：老赵','在微信中搜索用户名 guangzdou','data-copy-wechat="personal">复制微信名','const value=personal?\'guangzdou\':D.site.wechatName'])assert.ok(siteSource.includes(text));
+ for(const text of ['公众号：${e(D.site.wechatName)}','个人微信：老赵','在微信中搜索用户名 guangzdou','data-copy-wechat="personal">复制名称','直播视频：老赵市场观察','const value=personal?\'guangzdou\':D.site.wechatName'])assert.ok(siteSource.includes(text));
  assert.ok(!siteSource.includes('contact-qr'));
  assert.ok(!siteSource.includes('不收集邮箱、手机号或投资信息。'));
 });
