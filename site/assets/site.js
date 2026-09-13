@@ -25,18 +25,19 @@
  $('.dialog-close').addEventListener('click',close);
  dialog.addEventListener('click',ev=>{if(ev.target!==dialog)return;const r=dialog.getBoundingClientRect();if(ev.clientX<r.left||ev.clientX>r.right||ev.clientY<r.top||ev.clientY>r.bottom)close();});
  function follow(){
-  const qr=asset(D.site.wechatQr);
-  show('在熟悉的平台，继续交流。',`<p>公众号读文章，YouTube 看视频。这个网站把它们整理在一起。</p><div class="follow-options"><div class="follow-option"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11a8 8 0 0 1-8 8H8l-5 3 1-6a8 8 0 1 1 17-5Z"/></svg><div><h3>${e(D.site.wechatName)}</h3><p>在微信中搜索公众号名称</p></div><button data-copy-wechat>复制名称</button></div><div class="follow-option"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></svg><div><h3>老赵市场观察</h3><p>${e(D.site.youtubeHandle)}</p></div><a href="${e(D.site.youtubeUrl)}" target="_blank" rel="noopener noreferrer">访问 ↗</a></div></div>${qr?`<p style="margin-top:18px"><img class="contact-qr" src="${e(qr)}" alt="${e(D.site.wechatName)}公众号二维码"></p>`:''}<div class="dialog-note">不收集邮箱、手机号或投资信息。${D.site.previewMode?'公众号二维码未提供，因此本版使用搜索名称和复制入口，不生成模拟二维码。':''}</div>`,'FOLLOW / 关注老赵');
+  show('在熟悉的平台，继续交流。',`<p>公众号读文章，YouTube 看视频。这个网站把它们整理在一起。</p><div class="follow-options"><div class="follow-option"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11a8 8 0 0 1-8 8H8l-5 3 1-6a8 8 0 1 1 17-5Z"/></svg><div><h3>${e(D.site.wechatName)}</h3><p>在微信中搜索公众号名称</p></div><button data-copy-wechat>复制名称</button></div><div class="follow-option"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11a8 8 0 0 1-8 8H8l-5 3 1-6a8 8 0 1 1 17-5Z"/><path d="M8 11h.1M12 11h.1M16 11h.1"/></svg><div><h3>个人微信：老赵</h3><p>在微信中搜索用户名 guangzdou</p></div><button data-copy-wechat="personal">复制微信名</button></div><div class="follow-option"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></svg><div><h3>老赵市场观察</h3><p>${e(D.site.youtubeHandle)}</p></div><a href="${e(D.site.youtubeUrl)}" target="_blank" rel="noopener noreferrer">访问 ↗</a></div></div>`,'FOLLOW / 关注老赵');
  }
  async function copyWechat(button){
-  const value=D.site.wechatName;
+  const personal=button.dataset.copyWechat==='personal';
+  const value=personal?'guangzdou':D.site.wechatName;
+  const label=personal?'微信名':'公众号名称';
   try {
    if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(value);}else{throw new Error('clipboard unavailable');}
-   button.textContent='已复制';toast('已复制公众号名称：'+value);
+   button.textContent='已复制';toast(`已复制${label}：${value}`);
   }catch{
    const textarea=document.createElement('textarea');textarea.value=value;textarea.style.cssText='position:fixed;opacity:0;left:0;top:0';dialog.append(textarea);textarea.select();
    let ok=false;try{ok=document.execCommand('copy');}catch{} textarea.remove();
-   if(ok){button.textContent='已复制';toast('已复制公众号名称：'+value);}else{toast('请手动复制公众号名称：'+value);}
+   if(ok){button.textContent='已复制';toast(`已复制${label}：${value}`);}else{toast(`请手动复制${label}：${value}`);}
   }
  }
  function article(id){const a=D.articles.items.find(x=>x.id===id);if(!a)return;

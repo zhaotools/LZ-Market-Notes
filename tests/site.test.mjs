@@ -12,6 +12,7 @@ import {normalizeArticleImport} from '../scripts/import-articles.mjs';
 const data=JSON.parse(await readFile(resolve(root,'tests/fixtures/demo.json'),'utf8'));
 const current={site:await readJSON('site.json'),articles:await readJSON('articles.json'),videos:await readJSON('videos.json'),market:await readJSON('market.json')};
 const marketLiveSource=await readFile(resolve(root,'assets/market-live.js'),'utf8');
+const siteSource=await readFile(resolve(root,'assets/site.js'),'utf8');
 const marketLiveContext=vm.createContext({URL,Date,AbortController,setTimeout,clearTimeout});
 new vm.Script(marketLiveSource).runInContext(marketLiveContext);
 const marketLive=marketLiveContext.LZMarketLive;
@@ -131,6 +132,11 @@ test('requested four-season labels are scoped to their pages and Map URL stays u
  for(const text of ['LZ-4Stage Map','查看四季地图','https://zhaotools.github.io/LZ-4Stage-Map/'])assert.ok(toolsHTML.includes(text));
  assert.ok(homeHTML.includes('<h3>LZ-4Stage Map</h3>'));
 });
+test('follow dialog shows personal WeChat copy entry without QR or privacy note',()=>{
+ for(const text of ['个人微信：老赵','在微信中搜索用户名 guangzdou','data-copy-wechat="personal">复制微信名','const value=personal?\'guangzdou\':D.site.wechatName'])assert.ok(siteSource.includes(text));
+ assert.ok(!siteSource.includes('contact-qr'));
+ assert.ok(!siteSource.includes('不收集邮箱、手机号或投资信息。'));
+});
 test('headline follows dominant stage rather than hardcoding summer',()=>{
  const d=structuredClone(data);d.market.interpretation.stageCounts={S1:0,S2:0,S3:0,S4:16};
  const h=renderers.market(d);assert.ok(h.includes('冬季资产占比较高'));assert.ok(h.includes('持续关注阶段变化'));
@@ -184,7 +190,7 @@ test('manual article import requires verified original URLs and never copies bod
  assert.throws(()=>normalizeArticleImport([{...incoming[0],url:'https://example.com/article'}],{items:[]}));
 });
 test('browser scripts compile and generated pages load the live Map sanitizer first',async()=>{
- new vm.Script(marketLiveSource);new vm.Script(await readFile(resolve(root,'assets/site.js'),'utf8'));
+ new vm.Script(marketLiveSource);new vm.Script(siteSource);
  const generated=await readFile(resolve(root,'site/market.html'),'utf8');
  assert.ok(generated.indexOf('assets/market-live.js')<generated.indexOf('assets/site.js'));
  for(const hook of ['data-market-snapshot','data-market-reading','data-market-note'])assert.ok(generated.includes(hook));
