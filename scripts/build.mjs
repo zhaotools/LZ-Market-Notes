@@ -2,6 +2,7 @@ import { mkdir, rm, readFile, writeFile, cp } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { root, readJSON, validateMarket, validateContent } from './lib.mjs';
 import { renderers, pageHTML } from './templates.mjs';
+import { renderWechatRss } from './sync-wechat.mjs';
 const siteSource=await readJSON('site.json');
 const {youtubeExcludedVideoIds:_youtubeExcludedVideoIds,...publicSite}=siteSource;
 const data={site:publicSite,articles:validateContent(await readJSON('articles.json'),'articles'),videos:validateContent(await readJSON('videos.json'),'videos'),market:validateMarket(await readJSON('market.json'))};
@@ -10,6 +11,7 @@ await rm(dest,{recursive:true,force:true});await mkdir(dest,{recursive:true});
 await cp(resolve(root,'assets'),resolve(dest,'assets'),{recursive:true});
 await mkdir(resolve(dest,'data'),{recursive:true});
 for(const [k,v]of Object.entries(data)){await writeFile(resolve(dest,'data',k+'.json'),JSON.stringify(v,null,2)+'\n');}
+await writeFile(resolve(dest,'feed.xml'),renderWechatRss(data.articles.items,data.site,{lastBuildDate:data.articles.lastImportedAt}));
 const bodies={};
 const siteScript='<script src="assets/site.js" defer></script>';
 const liveScripts='<script src="assets/market-live.js" defer></script>'+siteScript;

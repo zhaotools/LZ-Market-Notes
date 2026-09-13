@@ -28,8 +28,6 @@ jobs:
           node-version: '22'
       - name: Synchronize public content sources
         if: github.event_name != 'push'
-        env:
-          WECHAT_FEED_URL: ${{ secrets.WECHAT_FEED_URL }}
         run: |
           npm run sync:youtube
           npm run sync:market

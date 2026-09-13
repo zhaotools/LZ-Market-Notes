@@ -7,7 +7,7 @@ import {readJSON,validateMarket,validateContent,esc,safeURL,safeAssetPath,root} 
 import {renderers,pageHTML,nav} from '../scripts/templates.mjs';
 import {normalizeMarket} from '../scripts/sync-market.mjs';
 import {fetchYoutubeFeed,inferCategory,parseYoutubeFeed} from '../scripts/sync-youtube.mjs';
-import {inferArticleCategory,parseWechatFeed} from '../scripts/sync-wechat.mjs';
+import {fetchWechatAlbum,inferArticleCategory,parseWechatAlbumPage,parseWechatFeed,renderWechatRss} from '../scripts/sync-wechat.mjs';
 import {normalizeArticleImport} from '../scripts/import-articles.mjs';
 const data=JSON.parse(await readFile(resolve(root,'tests/fixtures/demo.json'),'utf8'));
 const current={site:await readJSON('site.json'),articles:await readJSON('articles.json'),videos:await readJSON('videos.json'),market:await readJSON('market.json')};
@@ -21,6 +21,15 @@ function upstreamMarketFixture(){
  raw.markets=raw.markets.map(row=>{const next={...row};delete next.symbol;delete next.completedThrough;if(row.completedThrough)next.cryptoQuality={completedThrough:row.completedThrough};return next;});
  return raw;
 }
+function wechatAlbumFixture(entries,{accountName='老赵市场笔记',accountId='gh_a8fb4adf64dc',albumId='4693033529335087106',total=entries.length,hasMore=false}={}){
+ const items=entries.map(entry=>`{title: '${entry.title}',create_time: '${entry.createTime}',cover_img_1_1: '',url: '${entry.url.replaceAll('&','&amp;')}',read_count: -1,msgid: '${entry.msgid}',itemidx: '${entry.itemidx}',cover_theme_color: {r: '1',g: '2',b: '3'}}`).join(',');
+ return `<script>window.cgiData = {ret: '0',albumId: '${albumId}',nick_name: '${accountName}',user_name: '${accountId}',article_count: '${total}' * 1,articleList: [${items}],continue_flag: '${hasMore?1:0}' * 1,reverse_continue_flag: '0' * 1,};\n</script>`;
+}
+const wechatSite={
+ wechatName:'老赵市场笔记',wechatAccountId:'gh_a8fb4adf64dc',wechatBiz:'MzYzNDI3NDQ0OQ==',
+ wechatAlbumUrl:'https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzYzNDI3NDQ0OQ%3D%3D&action=getalbum&album_id=4693033529335087106',
+ baseUrl:'https://zhaotools.github.io/LZ-Market-Notes/'
+};
 
 test('current datasets and stable design fixtures pass validation',()=>{
  validateMarket(current.market);validateContent(current.articles,'articles');validateContent(current.videos,'videos');
@@ -47,7 +56,9 @@ test('production content and public URL are release-ready',()=>{
  assert.equal(current.site.baseUrl,'https://zhaotools.github.io/LZ-Market-Notes/');
  assert.equal(current.site.previewMode,false);
  assert.equal(current.site.wechatQr,'assets/wechat-qr.jpg');
- assert.equal(current.articles.items.length,7);
+ assert.ok(current.articles.items.length>=7);
+ assert.equal(current.site.wechatAlbumUrl,wechatSite.wechatAlbumUrl);
+ assert.equal(current.site.wechatAccountId,wechatSite.wechatAccountId);
  assert.ok(current.articles.items.every(x=>x.status==='published'));
  assert.equal(current.articles.items.find(x=>x.id==='foldable-screen-best-solution')?.url,'https://mp.weixin.qq.com/s/ns51z1cjpt3Dl8I2HzuyBw');
  assert.equal(current.articles.items.find(x=>x.id==='market-toolkit-website-2-launch')?.url,'https://mp.weixin.qq.com/s/UtcaIYeRgVDHt1dE_P3NJw');
@@ -182,6 +193,39 @@ test('WeChat RSS connector keeps only verified original links and no article bod
  assert.equal(next.status,'synced-rss-connector');assert.equal(inferArticleCategory('全球市场周观察'),'市场观察');
  assert.throws(()=>parseWechatFeed(xml.replace('老赵市场笔记','其他公众号'),{wechatName:'老赵市场笔记'},{items:[]}),/title did not match/);
  assert.throws(()=>parseWechatFeed(xml.replace('https://mp.weixin.qq.com/s/new-article','https://example.com/article'),{wechatName:'老赵市场笔记'},{items:[]}),/no valid/);
+});
+test('public WeChat collection metadata is identity-bound and normalized without executing remote JS',()=>{
+ const html=wechatAlbumFixture([{title:'AI 与投资系统',createTime:'1789176200',url:'http://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484179&idx=1&sn=abc',msgid:'2247484179',itemidx:'1'}],{total:34,hasMore:true});
+ const parsed=parseWechatAlbumPage(html,wechatSite);
+ assert.equal(parsed.accountName,'老赵市场笔记');assert.equal(parsed.accountId,'gh_a8fb4adf64dc');assert.equal(parsed.total,34);assert.equal(parsed.hasMore,true);
+ assert.equal(parsed.entries[0].date,'2026-09-12');assert.match(parsed.entries[0].url,/^https:\/\/mp\.weixin\.qq\.com\/s\?/);assert.ok(!parsed.entries[0].url.includes('#'));
+ assert.throws(()=>parseWechatAlbumPage(html.replace("nick_name: '老赵市场笔记'","nick_name: '其他公众号'"),wechatSite),/identity did not match/);
+ assert.throws(()=>parseWechatAlbumPage(html.replace('MzYzNDI3NDQ0OQ==','MzYzNDI3NDQ0OA=='),wechatSite),/valid public article/);
+});
+test('WeChat collection pagination follows the public cursor and stops at the declared total',async()=>{
+ const rows=[
+  {title:'新文章',createTime:'1789176200',url:'http://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2&idx=1&sn=two',msgid:'2',itemidx:'1'},
+  {title:'旧文章',createTime:'1789087262',url:'http://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=1&idx=1&sn=one',msgid:'1',itemidx:'1'}
+ ],requests=[];
+ const album=await fetchWechatAlbum(wechatSite,{waitImpl:async()=>{},fetchPage:async source=>{
+  requests.push(source);return requests.length===1?wechatAlbumFixture([rows[0]],{total:2,hasMore:true}):wechatAlbumFixture([rows[1]],{total:2,hasMore:false});
+ }});
+ assert.equal(album.entries.length,2);assert.equal(requests.length,2);assert.match(requests[0],/is_reverse=1/);assert.match(requests[1],/begin_msgid=2/);
+ await assert.rejects(()=>fetchWechatAlbum(wechatSite,{maxPages:1,waitImpl:async()=>{},fetchPage:async()=>wechatAlbumFixture([rows[0]],{total:2,hasMore:true})}),/pagination was incomplete/);
+});
+test('project RSS round-trips into website metadata and preserves hand-edited summaries',()=>{
+ const incoming=[{title:'新文章 & 方法',date:'2026-09-13',url:'https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ%3D%3D&mid=3&idx=1&sn=three',summary:'来自合集。'}];
+ const rss=renderWechatRss(incoming,wechatSite,{lastBuildDate:'2026-09-13T09:00:00+08:00'});
+ assert.match(rss,/&amp; 方法/);assert.ok(!rss.includes('content:encoded'));assert.ok(!rss.includes('<body>'));
+ const previous={items:[{id:'kept',title:'新文章 & 方法',date:'2026-09-13',url:'https://mp.weixin.qq.com/s/short',summary:'人工编辑摘要',category:'投资方法',theme:'method',tags:['方法'],featured:true,status:'published'}]};
+ const next=parseWechatFeed(rss,wechatSite,previous,{syncedAt:'2026-09-13T01:00:00.000Z'});
+ assert.equal(next.items.length,1);assert.equal(next.items[0].id,'kept');assert.equal(next.items[0].url,'https://mp.weixin.qq.com/s/short');assert.equal(next.items[0].summary,'人工编辑摘要');
+});
+test('generated pages advertise and publish the project-owned WeChat RSS',async()=>{
+ const feed=await readFile(resolve(root,'site/feed.xml'),'utf8');
+ const home=await readFile(resolve(root,'site/index.html'),'utf8');
+ assert.match(feed,/^<\?xml version="1\.0" encoding="UTF-8"\?>/);assert.ok(feed.includes('<title>老赵市场笔记</title>'));assert.ok(!feed.includes('content:encoded'));
+ assert.ok(home.includes('<link rel="alternate" type="application/rss+xml"'));assert.ok(home.includes('https://zhaotools.github.io/LZ-Market-Notes/feed.xml'));
 });
 test('manual article import requires verified original URLs and never copies bodies',()=>{
  const incoming=[{id:'verified-one',category:'投资方法',title:'核验文章',summary:'经人工核验的目录摘要。',date:'2026-09-10',url:'https://mp.weixin.qq.com/s/example',tags:['方法'],body:'do not copy'}];

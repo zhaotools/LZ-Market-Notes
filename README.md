@@ -23,13 +23,13 @@
 
 ## 当前数据状态——必须先知道
 
-公众号：已人工核验并接入 7 篇正式文章的公众号名称、标题、发布日期、页面摘要和原文链接。网站只保存目录信息并跳转至公众号原文，不搬运正文。
+公众号：已接入“老赵市场笔记”的公开合集（合集 ID `4693033529335087106`）。同步脚本从合集公开目录读取标题、发布日期和原文链接，生成本站 `feed.xml`，再由同一 RSS 解析器更新文章目录；既有 7 篇人工编辑摘要会保留。网站不请求登录、不保存 cookie、不搬运正文。
 
 YouTube：已核验频道 `@lzmarketwatch` 对应“老赵市场观察”（频道 ID `UCSk0Q0f1xvfyRQCxiFlfNWg`），并通过 YouTube 官方公开 RSS 接入最多最近 5 个有效公开视频的真实 ID、标题、发布日期、缩略图与原视频链接。已明确排除无法播放且未出现在频道列表中的旧直播占位页。RSS 不提供时长、完整历史或嵌入权限字段；这些字段仍需配置 Data API 后补全。
 
 市场：已从 Map 的 GitHub Pages 公开 JSON 联网同步 16 个全球样本，源生成时间为 2026-09-11T12:49:18.538Z，不是实时行情。保留来源、阶段、子阶段、阶段持续周数、周线口径日期，以及结构化的阶段占比、市场结构、关键位置与本期变化。详见 `docs/DATA_SOURCES.md`。
 
-公众号：关注弹窗使用用户提供的 430×430 原始二维码，并保留公众号名称搜索与复制入口。
+公众号：关注弹窗保留公众号名称搜索与复制入口，不展示二维码。
 
 **正式发布地址配置为 https://zhaotools.github.io/LZ-Market-Notes/。原有 Map 与工具箱仓库及官网均未修改。**
 
@@ -55,7 +55,7 @@ npm test            # 数据、转义、安全边界与模板测试
 npm run preview     # 预览已生成的 site/
 npm run sync:market # 同步 Map 的公开 global 快照
 npm run sync:youtube # 无密钥同步官方 RSS；有密钥时同步完整 Data API 目录
-npm run sync:wechat # 从已配置的第三方 RSS/Atom Feed 同步公众号目录
+npm run sync:wechat # 从公开公众号合集生成 RSS 并同步文章目录
 npm run import:articles -- /绝对路径/articles.json # 导入已人工核验的公众号目录
 npm run release:check  # 检查正式 URL、二维码和全部内容发布状态
 ```
@@ -73,7 +73,7 @@ scripts/serve.mjs            本地静态服务器
 scripts/import-articles.mjs  公众号文章元数据人工导入与严格校验
 scripts/sync-market.mjs      已联调的 Map 公开 global 快照同步脚本
 scripts/sync-youtube.mjs     YouTube 官方 RSS / Data API 双路径同步脚本
-scripts/sync-wechat.mjs      个人订阅号的可替换 RSS/Atom 目录连接器
+scripts/sync-wechat.mjs      公众号公开合集抓取、RSS 生成与目录连接器
 scripts/release-check.mjs    正式发布检查
  data/site.json              品牌、外链、公众号名称、预览状态
  data/articles.json          文章目录
@@ -87,15 +87,15 @@ CODEX_TASK.md                可直接交给 Codex 的开发任务书
 
 ## 后续数据接入
 
-公众号没有适合本静态站直接抓取的公开目录接口。将人工核验后的标题、摘要、正式日期和 `mp.weixin.qq.com` 原文 URL 整理为 JSON，然后运行 `npm run import:articles -- /绝对路径/articles.json`；可加 `--replace` 只保留本次导入内容。脚本只接受已发布条目，不复制正文，失败时不会改写现有目录。不要用后台 cookie 模拟抓取。
+公众号通过 `site.json` 中一次性配置的公开合集链接同步。`npm run sync:wechat` 会核验合集 ID、公众号名称、公开账号标识和 `__biz`，按公开游标分页读取合集目录，将其转换为 RSS 后再更新 `data/articles.json`。新文章只要加入合集，下一次定时运行即可自动收录；失败时保留旧目录，不使用后台 cookie，也不复制正文。`npm run import:articles` 仍可用于补充或维护人工摘要与分类。
 
 市场看板和首页的市场摘要会在浏览器打开时直接读取 LZ-Map 的公开 JSON，校验来源、`global` 范围、结构、计数、资产集合与时间后更新现有卡片和解读；读取失败、结构异常或资产集合变化时自动保留随网站发布的已验证静态快照，不读取会员接口、不复制算法。`npm run sync:market` 仍用于生成和归档静态备用快照。
 
 直接运行 `npm run sync:youtube` 会按 `site.json` 中已核验的频道 ID 读取 YouTube 官方 RSS，适合无密钥更新最近公开视频；`youtubeExcludedVideoIds` 用于持续排除已人工确认无效的直播占位页。提供 `YOUTUBE_API_KEY` 后，脚本改用 Data API 分页读取完整公开目录，并补充时长与嵌入权限。密钥不会进入前端、日志或构建输出；获取失败不会清空现有目录。同步后仍应人工核验分类。
 
-个人订阅号没有微信官方“获取已发布文章列表”接口权限。`npm run sync:wechat` 从 GitHub Actions Secret `WECHAT_FEED_URL` 读取一次性配置的第三方 RSS/Atom Feed，只接受 `mp.weixin.qq.com` 原文链接并合并到已有目录；Feed URL、登录信息与文章正文都不会写入仓库或网站。未配置 Feed 时保留现有文章快照。
+个人订阅号没有微信官方“获取已发布文章列表”接口权限，因此本站只读取该账号主动公开的合集目录。构建会把经过校验的文章元数据发布为 `feed.xml`；网站文章目录来自同一 RSS 解析结果。合集链接本身是公开地址，不需要 GitHub Secret。若未来取消合集配置，仍可用 `WECHAT_FEED_URL` 接入兼容的 RSS/Atom Feed 作为备用。
 
-GitHub Actions 每天北京时间 09:17 和 21:17 自动同步 YouTube RSS、Map 静态备用快照和已配置的公众号 Feed，并在 10:07 和 22:07 各进行一次低频补偿重试。YouTube RSS 使用带超时的分级重试，并在失败后通过 IPv4 `curl` 再次重试；日志会保留 HTTP 或网络错误摘要，现有视频数据不会因上游暂时不可用而被清空。同步脚本只有在目录或上游快照发生实际变化时才改写文件；通过构建、测试和正式发布检查后，工作流提交 `data/` 与对应生成页面，并在同一次运行中部署 Pages。补偿运行没有新内容时不会提交或部署；任一来源失败时不会发布未经验证的静态结果。市场看板的在线读取不依赖这些定时任务。
+GitHub Actions 每天北京时间 09:17 和 21:17 自动同步 YouTube RSS、Map 静态备用快照和公众号公开合集，并在 10:07 和 22:07 各进行一次低频补偿重试。YouTube RSS 与公众号合集都使用带超时的分级重试，并在失败后通过 IPv4 `curl` 再次重试；现有数据不会因上游暂时不可用而被清空。同步脚本只有在目录或上游快照发生实际变化时才改写文件；通过构建、测试和正式发布检查后，工作流提交 `data/`、`feed.xml` 与对应生成页面，并在同一次运行中部署 Pages。补偿运行没有新内容时不会提交或部署；任一来源失败时不会发布未经验证的静态结果。市场看板的在线读取不依赖这些定时任务。
 
 ## GitHub Pages 发布准备
 
@@ -109,6 +109,6 @@ GitHub Actions 每天北京时间 09:17 和 21:17 自动同步 YouTube RSS、Map
 
 ## 测试边界
 
-完成本地构建、18 项 Node 测试、170 项 Chrome 界面检查，包含 6 种宽度下全部页面的内容、导航和横向溢出检查。
+项目包含 Node 数据、同步、转义、安全边界与模板测试，并保留覆盖 6 种宽度的 Chrome 页面检查方案。
 
-浏览器检查覆盖本地多页面站点和独立 `preview.html`，验证 7 篇正式文章、二维码、4 条有效 RSS 视频、播放器按需创建和关闭、筛选及手机菜单。另行核验公众号原文链接、Map 公开 JSON 与 YouTube RSS。尚未验证 YouTube 真实播放过程、Safari 或微信内置浏览器。
+浏览器检查覆盖本地多页面站点和独立 `preview.html`，验证正式文章目录、公开视频、播放器按需创建和关闭、筛选及手机菜单。另行核验公众号合集、生成 RSS、Map 公开 JSON 与 YouTube RSS。尚未验证 YouTube 真实播放过程、Safari 或微信内置浏览器。

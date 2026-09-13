@@ -8,7 +8,7 @@
 - Map：https://zhaotools.github.io/LZ-4Stage-Map/
 - 工具箱：https://zhaotools.github.io/LZ-Market-Toolkit/
 
-公众号目录由用户提供原文链接。前 5 篇于 2026-09-11 逐页核验页面元数据；新增 2 篇于 2026-09-12 通过用户提供的原文顶部截图核验公众号、标题、发布日期及链接对应关系。共 7 篇正式条目已写入 `data/articles.json`：
+公众号最初由用户提供原文链接。前 5 篇于 2026-09-11 逐页核验页面元数据；新增 2 篇于 2026-09-12 通过用户提供的原文顶部截图核验公众号、标题、发布日期及链接对应关系。以下 7 篇保留人工编辑摘要、分类和标签：
 
 - 2026-09-12：[当下折叠屏的最优解：iPhone 17 + Vivo X Fold6，不是iPhone Duo](https://mp.weixin.qq.com/s/ns51z1cjpt3Dl8I2HzuyBw)
 - 2026-09-11：[老赵市场工具箱官网2.0上线：让投资决策更有章法](https://mp.weixin.qq.com/s/UtcaIYeRgVDHt1dE_P3NJw)
@@ -18,11 +18,17 @@
 - 2026-08-29：[大资金和大多数](https://mp.weixin.qq.com/s/KdUiWFxqn-Gm3vin6w0JUA)
 - 2026-08-28：[为什么趋势投资更适合普通投资者，成功概率高于价值投资？](https://mp.weixin.qq.com/s/j9WVATPxktg4GHy9rIMTIg)
 
-本站不抓取或保存正文。前 5 篇摘要使用公众号页面公开的 `og:description`；新增 2 篇使用基于截图可核验主题撰写的目录摘要。分类和标签是本站目录编辑字段。
+2026-09-14 用户创建并确认了“老赵市场笔记”公开合集：
+
+https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzYzNDI3NDQ0OQ%3D%3D&action=getalbum&album_id=4693033529335087106
+
+公开页面核验结果为：合集 ID `4693033529335087106`、公众号名称“老赵市场笔记”、公开账号标识 `gh_a8fb4adf64dc`、`__biz` 为 `MzYzNDI3NDQ0OQ==`，页面当时标记 34 篇文章。`scripts/sync-wechat.mjs` 只解析 `window.cgiData` 中的标题、时间戳、原文 URL 和分页游标，不执行远程 JavaScript；按倒序分页读取合集后先生成 RSS，再通过严格的 RSS 解析器合并到 `data/articles.json`。构建发布的 RSS 地址为 `feed.xml`。
+
+本站不抓取或保存正文。前 5 篇人工摘要使用公众号页面公开的 `og:description`；新增 2 篇使用基于截图可核验主题撰写的目录摘要。合集新增条目在没有人工摘要时使用明确的目录占位说明，分类按标题规则初步归类；既有人工摘要、分类、标签与短链接优先保留。
 
 公众号二维码来自用户提供的 `IMG_1450.JPG`，原样保存为 `assets/wechat-qr.jpg`，尺寸 430×430，SHA-256 为 `0b186f8859ec8f064908d214450ef1e10ade8d72bb3389fd057b5683b693e43a`。
 
-“老赵市场笔记”为个人订阅号，不能使用微信官方发布列表 API。项目提供 `scripts/sync-wechat.mjs` 作为可替换 RSS/Atom 连接器：Feed URL 仅从 GitHub Actions Secret `WECHAT_FEED_URL` 读取，返回条目必须包含 HTTPS 的 `mp.weixin.qq.com` 原文链接、标题和有效发布日期。连接器只保留目录摘要，不保存 Feed 凭据或文章正文；Feed 缺失、失效或账号名称不匹配时保留上一版数据。
+“老赵市场笔记”为个人订阅号，不能使用微信官方发布列表 API。公开合集由账号主动维护，因此不需要登录、cookie 或 GitHub Secret。同步器必须同时匹配合集 ID、公众号名称、公开账号标识和 `__biz`，原文 URL 必须是该账号的 HTTPS `mp.weixin.qq.com/s` 链接；任一校验失败时保留上一版数据。`WECHAT_FEED_URL` 仅作为没有合集配置时的兼容备用路径。
 
 YouTube 已核验 `@lzmarketwatch` 对应频道“老赵市场观察”，频道 ID 为 `UCSk0Q0f1xvfyRQCxiFlfNWg`。`data/videos.json` 来自 YouTube 官方公开 RSS 最近目录。2026-09-11 复核发现视频 `1YV4RAFeNXs` 虽仍在 RSS 且页面、缩略图和 oEmbed 返回 HTTP 200，但播放状态为 `LIVE_STREAM_OFFLINE`、页面提示直播尚未开始，且频道视频与直播列表均未展示，因此作为无效旧直播占位页加入 `youtubeExcludedVideoIds`；网站当前展示其余 4 条有效目录信息。
 
@@ -59,7 +65,7 @@ https://github.com/zhaotools/LZ-Market-Toolkit/blob/main/index.html
 GitHub Pages 工作流参考通过 GitHub 连接器读取的官方模板：
 https://github.com/actions/starter-workflows/blob/main/pages/static.yml
 
-工作流在北京时间 09:17 和 21:17 自动检查 YouTube RSS、Map 静态备用快照和已配置的公众号 Feed，并在 10:07 和 22:07 分别补偿重试。YouTube RSS 请求会先进行带超时与明确请求头的分级重试；仍失败时使用 IPv4 `curl` 对传输错误和临时 HTTP 错误继续重试，并输出不含凭据的错误摘要。只有实际内容变化才提交 `data/`、`site/` 与 `preview.html`；随后在同一次运行内完成 Pages 部署，避免依赖机器人提交再次触发工作流。同步后依次构建、测试并运行 `release:check`，通过后只上传 `site/`。市场看板的在线读取不依赖该定时器。2026-09-10 已按各 Action 官方最新稳定主版本更新为 checkout@v7、setup-node@v7、configure-pages@v6、upload-pages-artifact@v5 与 deploy-pages@v5。
+工作流在北京时间 09:17 和 21:17 自动检查 YouTube RSS、Map 静态备用快照和公众号公开合集，并在 10:07 和 22:07 分别补偿重试。YouTube RSS 与公众号合集请求会先进行带超时与明确请求头的分级重试；仍失败时使用 IPv4 `curl` 对传输错误和临时 HTTP 错误继续重试。只有实际内容变化才提交 `data/`、`site/` 与 `preview.html`；随后在同一次运行内完成 Pages 部署，避免依赖机器人提交再次触发工作流。同步后依次构建、测试并运行 `release:check`，通过后只上传 `site/`。市场看板的在线读取不依赖该定时器。2026-09-10 已按各 Action 官方最新稳定主版本更新为 checkout@v7、setup-node@v7、configure-pages@v6、upload-pages-artifact@v5 与 deploy-pages@v5。
 
 无密钥路径采用 YouTube 官方公开 RSS：
 https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg
