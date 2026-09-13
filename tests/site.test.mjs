@@ -13,6 +13,7 @@ const data=JSON.parse(await readFile(resolve(root,'tests/fixtures/demo.json'),'u
 const current={site:await readJSON('site.json'),articles:await readJSON('articles.json'),videos:await readJSON('videos.json'),market:await readJSON('market.json')};
 const marketLiveSource=await readFile(resolve(root,'assets/market-live.js'),'utf8');
 const siteSource=await readFile(resolve(root,'assets/site.js'),'utf8');
+const stylesSource=await readFile(resolve(root,'assets/styles.css'),'utf8');
 const marketLiveContext=vm.createContext({URL,Date,AbortController,setTimeout,clearTimeout});
 new vm.Script(marketLiveSource).runInContext(marketLiveContext);
 const marketLive=marketLiveContext.LZMarketLive;
@@ -86,6 +87,15 @@ test('all six pages render semantic main content and shared navigation',()=>{
  for(const [name,render]of Object.entries(renderers)){
   const html=pageHTML(name,data,render(data));assert.ok(html.includes('lang="zh-CN"'));assert.ok(html.includes('<main id="main">'));assert.ok(html.includes('aria-current="page"'));assert.ok(html.includes('noindex,nofollow'));
   if(name!=='index')assert.ok(html.includes(`page-intro-art-${name}`));
+ }
+});
+test('article cards omit decorative covers and use subtle category tones',()=>{
+ const homeHTML=renderers.index(data),articleHTML=renderers.articles(data);
+ const homeArticles=homeHTML.slice(homeHTML.indexOf('<div class="article-home-grid">'),homeHTML.indexOf('<div class="article-extra">'));
+ assert.ok(!homeArticles.includes('class="cover '));
+ assert.ok(!articleHTML.includes('class="cover cover-'));
+ for(const [category,tone] of Object.entries({'市场观察':'market','投资方法':'method','工具使用':'tool','AI 实践':'ai'})){
+  assert.ok(articleHTML.includes(`article-tone-${tone}`));assert.ok(articleHTML.includes(`data-article-category="${category}"`));assert.ok(stylesSource.includes(`.article-tone-${tone}{--article-bg:`));
  }
 });
 test('detail-page actions sit beneath their themed intro artwork',()=>{
