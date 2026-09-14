@@ -6,7 +6,7 @@ import vm from 'node:vm';
 import {readJSON,validateMarket,validateContent,esc,safeURL,safeAssetPath,root} from '../scripts/lib.mjs';
 import {renderers,pageHTML,nav} from '../scripts/templates.mjs';
 import {normalizeMarket} from '../scripts/sync-market.mjs';
-import {fetchYoutubeFeed,inferCategory,parseYoutubeFeed} from '../scripts/sync-youtube.mjs';
+import {buildYoutubeChannelDirectory,fetchYoutubeFeed,inferCategory,parseYoutubeChannelPage,parseYoutubeFeed,parseYoutubeWatchPage} from '../scripts/sync-youtube.mjs';
 import {fetchWechatAlbum,inferArticleCategory,parseWechatAlbumPage,parseWechatFeed,renderWechatRss} from '../scripts/sync-wechat.mjs';
 import {normalizeArticleImport} from '../scripts/import-articles.mjs';
 const data=JSON.parse(await readFile(resolve(root,'tests/fixtures/demo.json'),'utf8'));
@@ -112,13 +112,15 @@ test('public synchronization strips non-public assets and unrelated fields',()=>
  const n=normalizeMarket(d,'https://example.com/public.json');assert.equal(n.markets.length,16);assert.equal(n.markets[0].privateKey,undefined);
 });
 test('browser loads, sanitizes and accepts a newer public LZ-Map snapshot',async()=>{
- const raw=upstreamMarketFixture(),requested=[];raw.generatedAt='2026-09-12T04:01:58.772Z';raw.interpretation.generatedAt=raw.generatedAt;
+ const raw=upstreamMarketFixture(),requested=[];
+ raw.generatedAt=new Date(Date.parse(current.market.generatedAt)+60_000).toISOString();raw.interpretation.generatedAt=raw.generatedAt;
+ const syncedAt=new Date(Date.parse(raw.generatedAt)+1000).toISOString();
  raw.markets[0].privateKey='secret';raw.markets.push({...raw.markets[0],code:'PRIVATE',collections:['member']});
  const result=await marketLive.loadLatestMarket(current.market,{
-  sourceUrl:'https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json',now:'2026-09-12T04:02:00.000Z',
+  sourceUrl:'https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json',now:syncedAt,
   fetchImpl:async(url,options)=>{requested.push({url,options});return {ok:true,status:200,json:async()=>raw};}
  });
- assert.equal(result.changed,true);assert.equal(result.market.generatedAt,raw.generatedAt);assert.equal(result.market.syncedAt,'2026-09-12T04:02:00.000Z');
+ assert.equal(result.changed,true);assert.equal(result.market.generatedAt,raw.generatedAt);assert.equal(result.market.syncedAt,syncedAt);
  assert.equal(result.market.markets.length,current.market.markets.length);assert.equal(result.market.markets[0].privateKey,undefined);
  assert.equal(requested[0].options.cache,'no-store');assert.equal(requested[0].options.headers.accept,'application/json');
 });
@@ -189,6 +191,23 @@ test('configured YouTube exclusions are applied before the latest-five cap',()=>
  const site={youtubeChannelId:'UCSk0Q0f1xvfyRQCxiFlfNWg',youtubeChannelTitle:'老赵市场观察',youtubeExcludedVideoIds:['vid00000000']};
  const next=parseYoutubeFeed(`<feed><title>老赵市场观察</title>${entries}</feed>`,site,{items:[]});
  assert.equal(next.items.length,5);assert.ok(!next.items.some(x=>x.youtubeId==='vid00000000'));
+});
+test('modern YouTube channel cards are parsed without executing remote scripts',()=>{
+ const html=`<script>var ytInitialData = {"metadata":{"channelId":"UCSk0Q0f1xvfyRQCxiFlfNWg"},"contents":[{"lockupViewModel":{"contentId":"5tCdHTzcB7A","contentType":"LOCKUP_CONTENT_TYPE_VIDEO","metadata":{"lockupMetadataViewModel":{"title":{"content":"老赵市场观察｜趋势投资 从理论到实践｜2026-09-13"}}}}},{"lockupViewModel":{"contentId":"not-a-video","contentType":"LOCKUP_CONTENT_TYPE_PLAYLIST","metadata":{"lockupMetadataViewModel":{"title":{"content":"播放列表"}}}}}]};</script>`;
+ const parsed=parseYoutubeChannelPage(html,{youtubeChannelId:'UCSk0Q0f1xvfyRQCxiFlfNWg'});
+ assert.deepEqual(parsed,[{id:'5tCdHTzcB7A',title:'老赵市场观察｜趋势投资 从理论到实践｜2026-09-13'}]);
+});
+test('YouTube watch metadata is bound to the configured channel and video',()=>{
+ const site={youtubeChannelId:'UCSk0Q0f1xvfyRQCxiFlfNWg'},html=`<script>var ytInitialPlayerResponse = {"videoDetails":{"videoId":"5tCdHTzcB7A","channelId":"UCSk0Q0f1xvfyRQCxiFlfNWg","title":"趋势投资 从理论到实践","shortDescription":"公开视频说明"},"microformat":{"playerMicroformatRenderer":{"publishDate":"2026-09-13T07:21:37-07:00"}}};</script>`;
+ const item=parseYoutubeWatchPage(html,site,'5tCdHTzcB7A');assert.equal(item.title,'趋势投资 从理论到实践');assert.equal(item.publishedAt,'2026-09-13T07:21:37-07:00');
+ assert.throws(()=>parseYoutubeWatchPage(html.replace('UCSk0Q0f1xvfyRQCxiFlfNWg','UCwrongwrongwrongwrong12'),site,'5tCdHTzcB7A'),/failed validation/);
+});
+test('public YouTube channel fallback verifies and keeps the latest five videos',async()=>{
+ const ids=Array.from({length:6},(_,i)=>`vid0000000${i}`),site={youtubeChannelId:'UCSk0Q0f1xvfyRQCxiFlfNWg',youtubeChannelTitle:'老赵市场观察',youtubeUrl:'https://www.youtube.com/@lzmarketwatch',youtubeExcludedVideoIds:[ids[0]]};
+ const cards=ids.map((id,i)=>`{"lockupViewModel":{"contentId":"${id}","contentType":"LOCKUP_CONTENT_TYPE_VIDEO","metadata":{"lockupMetadataViewModel":{"title":{"content":"视频 ${i}"}}}}}`).join(',');
+ const html=`<script>var ytInitialData = {"channelId":"${site.youtubeChannelId}","contents":[${cards}]};</script>`;
+ const next=await buildYoutubeChannelDirectory(html,site,{items:[]},{syncedAt:'2026-09-14T02:00:00.000Z',fetchWatchPage:async id=>`<script>var ytInitialPlayerResponse = {"videoDetails":{"videoId":"${id}","channelId":"${site.youtubeChannelId}","title":"视频 ${id}","shortDescription":"说明"},"microformat":{"playerMicroformatRenderer":{"publishDate":"2026-09-13T07:21:37-07:00"}}};</script>`});
+ assert.equal(next.status,'synced-public-channel-page');assert.equal(next.items.length,5);assert.ok(!next.items.some(item=>item.youtubeId===ids[0]));
 });
 test('source-only YouTube exclusion config is not published',async()=>{
  const publishedSite=JSON.parse(await readFile(resolve(root,'site/data/site.json'),'utf8'));

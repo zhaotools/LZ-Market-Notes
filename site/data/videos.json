@@ -1,12 +1,28 @@
 {
   "schemaVersion": 1,
   "status": "synced-public-rss",
-  "lastSyncedAt": "2026-09-11T15:56:56.220Z",
+  "lastSyncedAt": "2026-09-14T07:49:20.645Z",
   "channelId": "UCSk0Q0f1xvfyRQCxiFlfNWg",
   "channelTitle": "老赵市场观察",
   "sourceUrl": "https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg",
   "note": "通过 YouTube 官方公开 RSS 同步最近公开视频。RSS 不提供完整历史、时长或嵌入权限；配置 Data API 密钥后可同步完整公开视频目录并核验这些字段。",
   "items": [
+    {
+      "id": "5tCdHTzcB7A",
+      "youtubeId": "5tCdHTzcB7A",
+      "title": "老赵市场观察｜趋势投资 从理论到实践｜2026-09-13",
+      "summary": "从投资方法 → 趋势投资 → 四阶段理论 → 4Stage系统 → 全球市场地图Map",
+      "category": "市场观察",
+      "editorialCategory": null,
+      "coverTitle": "老赵市场观察｜趋势投资 从理论到实践｜2026-09-13",
+      "theme": "cross",
+      "url": "https://www.youtube.com/watch?v=5tCdHTzcB7A",
+      "thumbnail": "https://i.ytimg.com/vi/5tCdHTzcB7A/hqdefault.jpg",
+      "publishedAt": "2026-09-13T14:21:37+00:00",
+      "duration": null,
+      "embeddable": null,
+      "status": "published"
+    },
     {
       "id": "eXS3gztvNJI",
       "youtubeId": "eXS3gztvNJI",
@@ -67,22 +83,6 @@
       "url": "https://www.youtube.com/watch?v=u1spsYnufV8",
       "thumbnail": "https://i.ytimg.com/vi/u1spsYnufV8/hqdefault.jpg",
       "publishedAt": "2026-09-10T06:23:39+00:00",
-      "duration": null,
-      "embeddable": null,
-      "status": "published"
-    },
-    {
-      "id": "aJqCPoT2vs4",
-      "youtubeId": "aJqCPoT2vs4",
-      "title": "老赵每周市场观察—分化中的修复—2026/8/30",
-      "summary": "老赵市场观察｜2026/8/30 本期主题：分化中的修复 BTC 已经站上周线 MA30，为什么还没有进入 S2 牛市阶段？ 本期通过 LZ-4Stage 四阶段趋势框架，扫描全球主要市场，并重点分析美股、A股和加密市场当前的趋势状态。 本期主要内容： - 全球市场扫描：美股继续",
-      "category": "市场观察",
-      "editorialCategory": null,
-      "coverTitle": "老赵每周市场观察—分化中的修复—2026/8/30",
-      "theme": "cross",
-      "url": "https://www.youtube.com/watch?v=aJqCPoT2vs4",
-      "thumbnail": "https://i.ytimg.com/vi/aJqCPoT2vs4/hqdefault.jpg",
-      "publishedAt": "2026-08-30T15:27:01+00:00",
       "duration": null,
       "embeddable": null,
       "status": "published"

@@ -15,8 +15,15 @@ const rssHeaders={
  accept:'application/atom+xml,application/xml;q=0.9,*/*;q=0.5',
  'user-agent':'Mozilla/5.0 (compatible; LZ-Market-Notes/1.0; +https://github.com/zhaotools/LZ-Market-Notes)'
 };
+const pageHeaders={
+ accept:'text/html,application/xhtml+xml;q=0.9,*/*;q=0.5',
+ 'accept-language':'en-US,en;q=0.8',
+ 'user-agent':rssHeaders['user-agent']
+};
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const usableFeed=xml=>/<feed(?:\s|>)/.test(String(xml))&&/<entry>[\s\S]*?<\/entry>/.test(String(xml));
+const usableChannelPage=html=>String(html).includes('ytInitialData')&&String(html).includes('LOCKUP_CONTENT_TYPE_VIDEO');
+const usableWatchPage=html=>String(html).includes('ytInitialPlayerResponse');
 export const inferCategory=title=>/定投|系统|教程|工具|指标|DCA|Status/i.test(title)?'系统教程':'市场观察';
 const youtubeExclusions=site=>{
  const ids=site.youtubeExcludedVideoIds??[];
@@ -26,6 +33,82 @@ const youtubeExclusions=site=>{
 const decodeXML=value=>String(value||'').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/&#x([\da-f]+);/gi,(_,n)=>String.fromCodePoint(parseInt(n,16))).replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n))).replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 const tag=(block,name)=>decodeXML(block.match(new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${name}>`))?.[1]||'').replace(/<[^>]+>/g,'').trim();
 const compact=value=>String(value||'').replace(/\s+/g,' ').trim();
+const objectAfterMarker=(source,markers)=>{
+ const text=String(source);
+ for(const marker of markers){
+  let markerAt=text.indexOf(marker);
+  while(markerAt!==-1){
+   const start=text.indexOf('{',markerAt+marker.length);
+   if(start===-1)break;
+   let depth=0,inString=false,escaped=false;
+   for(let index=start;index<text.length;index++){
+    const char=text[index];
+    if(inString){
+     if(escaped)escaped=false;
+     else if(char==='\\')escaped=true;
+     else if(char==='"')inString=false;
+     continue;
+    }
+    if(char==='"'){inString=true;continue;}
+    if(char==='{')depth++;
+    else if(char==='}'&&--depth===0){
+     try{return JSON.parse(text.slice(start,index+1));}catch{break;}
+    }
+   }
+   markerAt=text.indexOf(marker,markerAt+marker.length);
+  }
+ }
+ throw new Error('YouTube page did not contain readable public metadata.');
+};
+const textValue=value=>compact(typeof value==='string'?value:value?.simpleText??value?.content??value?.runs?.map(row=>row.text??row.content??'').join(' ')??'');
+export function parseYoutubeChannelPage(html,site){
+ if(!String(html).includes(site.youtubeChannelId||''))throw new Error('YouTube channel page identity did not match the configured channel.');
+ const data=objectAfterMarker(html,['var ytInitialData = ','window["ytInitialData"] = ','ytInitialData = ']);
+ const candidates=[],seen=new Set(),add=(id,title)=>{
+  if(!/^[\w-]{11}$/.test(id||'')||!title||seen.has(id))return;
+  seen.add(id);candidates.push({id,title});
+ };
+ const visit=value=>{
+  if(Array.isArray(value)){for(const item of value)visit(item);return;}
+  if(!value||typeof value!=='object')return;
+  const lockup=value.lockupViewModel;
+  if(lockup?.contentType==='LOCKUP_CONTENT_TYPE_VIDEO')add(lockup.contentId,textValue(lockup.metadata?.lockupMetadataViewModel?.title));
+  const classic=value.videoRenderer;
+  if(classic)add(classic.videoId,textValue(classic.title));
+  for(const child of Object.values(value))visit(child);
+ };
+ visit(data);
+ if(!candidates.length)throw new Error('YouTube channel page returned no public videos; existing data preserved.');
+ return candidates;
+}
+export function parseYoutubeWatchPage(html,site,expectedId){
+ const data=objectAfterMarker(html,['var ytInitialPlayerResponse = ','window["ytInitialPlayerResponse"] = ','ytInitialPlayerResponse = ']);
+ const details=data.videoDetails||{},micro=data.microformat?.playerMicroformatRenderer||{};
+ const id=details.videoId,channelId=details.channelId,publishedAt=micro.publishDate||micro.uploadDate,title=compact(details.title);
+ if(id!==expectedId||channelId!==site.youtubeChannelId||!title||!Number.isFinite(Date.parse(publishedAt)))throw new Error(`YouTube watch metadata failed validation for ${expectedId}.`);
+ return {id,title,publishedAt,description:compact(details.shortDescription),thumbnail:`https://i.ytimg.com/vi/${id}/hqdefault.jpg`};
+}
+const videoItem=(metadata,previous)=>{
+ const existing=previous.items.find(x=>x.youtubeId===metadata.id||x.id===metadata.id),title=metadata.title;
+ return {id:metadata.id,youtubeId:metadata.id,title,summary:(metadata.description||'来自「老赵市场观察」的公开视频。').slice(0,140),
+  category:existing?.editorialCategory||existing?.category||inferCategory(title),editorialCategory:existing?.editorialCategory||null,
+  coverTitle:title,theme:existing?.theme||'cross',url:`https://www.youtube.com/watch?v=${metadata.id}`,
+  thumbnail:metadata.thumbnail,publishedAt:metadata.publishedAt,duration:null,embeddable:null,status:'published'};
+};
+export async function buildYoutubeChannelDirectory(html,site,previous,{fetchWatchPage,syncedAt=new Date().toISOString()}={}){
+ if(typeof fetchWatchPage!=='function')throw new Error('A YouTube watch-page reader is required.');
+ const excluded=youtubeExclusions(site),candidates=parseYoutubeChannelPage(html,site).filter(item=>!excluded.has(item.id)),items=[];
+ for(let start=0;start<candidates.length&&items.length<5;start+=5){
+  const batch=candidates.slice(start,start+5);
+  const results=await Promise.allSettled(batch.map(async candidate=>parseYoutubeWatchPage(await fetchWatchPage(candidate.id),site,candidate.id)));
+  for(const result of results){if(result.status==='fulfilled'&&items.length<5)items.push(videoItem(result.value,previous));}
+ }
+ if(!items.length)throw new Error('YouTube channel page returned no verified public videos; existing data preserved.');
+ const next={schemaVersion:1,status:'synced-public-channel-page',lastSyncedAt:syncedAt,channelId:site.youtubeChannelId,
+  channelTitle:site.youtubeChannelTitle||null,sourceUrl:`${String(site.youtubeUrl||'').replace(/\/$/,'')}/videos`,
+  note:'YouTube 官方 RSS 暂时不可用时，通过公开频道页同步最近 5 条视频，并用公开视频页核验标题、频道和发布日期。',items};
+ validateContent(next,'videos');return next;
+}
 export function parseYoutubeFeed(xml,site,previous,{syncedAt=new Date().toISOString()}={}){
  const excluded=youtubeExclusions(site);
  const entries=[...String(xml).matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(x=>x[1]).filter(entry=>!excluded.has(tag(entry,'yt:videoId'))).slice(0,5);
@@ -76,16 +159,60 @@ async function fetchYoutubeFeedWithCurl(source){
   throw new Error(`YouTube RSS curl fallback failed after retries (${detail}).`);
  }
 }
+async function fetchYoutubePage(source,usable,{fetchImpl=fetch,waitImpl=wait,delays=[0,2000,5000],timeout=20000}={}){
+ let lastError='unknown error';
+ for(let index=0;index<delays.length;index++){
+  if(delays[index]>0)await waitImpl(delays[index]);
+  try{
+   const response=await fetchImpl(source,{headers:pageHeaders,redirect:'follow',signal:AbortSignal.timeout(timeout)});
+   if(response.ok){const html=await response.text();if(usable(html))return html;lastError='response did not contain usable public metadata';}
+   else {lastError=`HTTP ${response.status}`;if(response.status===404)break;}
+  }catch(error){lastError=error instanceof Error?`${error.name}: ${error.message}`:String(error);}
+ }
+ throw new Error(`YouTube public page fetch failed (${lastError}).`);
+}
+async function fetchYoutubePageWithCurl(source,usable){
+ try{
+  const {stdout}=await execFileAsync('curl',['--location','--fail','--silent','--show-error','--ipv4','--retry','3','--retry-connrefused','--retry-delay','3',
+   '--connect-timeout','15','--max-time','60','--header',`Accept: ${pageHeaders.accept}`,'--header',`Accept-Language: ${pageHeaders['accept-language']}`,
+   '--user-agent',pageHeaders['user-agent'],source],{encoding:'utf8',maxBuffer:20*1024*1024});
+  if(!usable(stdout))throw new Error('curl response did not contain usable public metadata');
+  return stdout;
+ }catch(error){
+  const detail=compact(error?.stderr||error?.message||'unknown curl error').slice(0,240);
+  throw new Error(`YouTube public page curl fallback failed (${detail}).`);
+ }
+}
+async function loadYoutubePage(source,usable){
+ try{return await fetchYoutubePage(source,usable);}
+ catch(error){console.warn(`${error.message} Falling back to curl.`);return fetchYoutubePageWithCurl(source,usable);}
+}
+async function syncYoutubeChannelPage(site,previous){
+ const base=safeURL(site.youtubeUrl,['www.youtube.com','youtube.com']);
+ if(!base)throw new Error('Set the verified youtubeUrl in site.json; videos.json was preserved.');
+ const source=`${base.replace(/\/$/,'')}/videos?hl=en&gl=US`,html=await loadYoutubePage(source,usableChannelPage);
+ const next=await buildYoutubeChannelDirectory(html,site,previous,{fetchWatchPage:id=>loadYoutubePage(`https://www.youtube.com/watch?v=${id}&hl=en&gl=US`,usableWatchPage)});
+ if(JSON.stringify(previous)===JSON.stringify({...next,lastSyncedAt:previous.lastSyncedAt})){
+  console.log('YouTube latest-five directory is unchanged.');return {changed:false};
+ }
+ await atomicJSON(resolve(root,'data/videos.json'),next);
+ console.log(`Saved ${next.items.length} latest public videos. Source: YouTube public channel page fallback.`);
+ return {changed:true};
+}
 async function syncYoutubeRSS(site,previous){
  if(!/^UC[\w-]{22}$/.test(site.youtubeChannelId||''))throw new Error('Set the verified youtubeChannelId in site.json; videos.json was preserved.');
  const source=`https://www.youtube.com/feeds/videos.xml?channel_id=${site.youtubeChannelId}`;
  let xml='';
  try{xml=await fetchYoutubeFeed(source);}
  catch(error){
-  console.warn(`${error.message} Falling back to curl with IPv4 and transport retries.`);
-  try{xml=await fetchYoutubeFeedWithCurl(source);}
-  catch(fallbackError){throw new Error(`${fallbackError.message} videos.json was preserved.`);}
+  if(/HTTP 404/.test(error.message))console.warn(`${error.message} Falling back to the public channel page.`);
+  else{
+   console.warn(`${error.message} Falling back to curl with IPv4 and transport retries.`);
+   try{xml=await fetchYoutubeFeedWithCurl(source);}
+   catch(fallbackError){console.warn(`${fallbackError.message} Falling back to the public channel page.`);}
+  }
  }
+ if(!xml)return syncYoutubeChannelPage(site,previous);
  const next=parseYoutubeFeed(xml,site,previous);
  if(JSON.stringify(previous)===JSON.stringify({...next,lastSyncedAt:previous.lastSyncedAt})){
   console.log('YouTube latest-five directory is unchanged.');return {changed:false};
