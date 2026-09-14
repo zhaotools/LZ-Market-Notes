@@ -89,6 +89,16 @@ test('all six pages render semantic main content and shared navigation',()=>{
   if(name!=='index')assert.ok(html.includes(`page-intro-art-${name}`));
  }
 });
+test('optimized brand artwork is wired to site, PWA, Apple and favicon surfaces',async()=>{
+ const assets=['logo.png','icon-192.png','icon-512.png','icon-512-maskable.png','apple-touch-icon.png','favicon-32.png','favicon.ico'];
+ for(const file of assets)assert.ok((await readFile(resolve(root,'assets',file))).length>100,`${file} should contain image data`);
+ const manifest=JSON.parse(await readFile(resolve(root,'assets/manifest.webmanifest'),'utf8'));
+ assert.equal(manifest.name,'老赵市场笔记');assert.equal(manifest.display,'standalone');assert.equal(manifest.icons.length,3);
+ const html=pageHTML('index',current,renderers.index(current));
+ for(const path of ['assets/logo.png','assets/favicon.ico','assets/favicon-32.png','assets/apple-touch-icon.png','assets/manifest.webmanifest'])assert.ok(html.includes(path));
+ assert.ok(renderers.index(current).includes('class="about-emblem" src="assets/logo.png"'));
+ assert.ok(renderers.about(current).includes('class="about-brand-logo" src="assets/logo.png"'));
+});
 test('article cards omit decorative covers and use subtle category tones',()=>{
  const homeHTML=renderers.index(data),articleHTML=renderers.articles(data);
  const homeArticles=homeHTML.slice(homeHTML.indexOf('<div class="article-home-grid">'),homeHTML.indexOf('<div class="article-extra">'));

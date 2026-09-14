@@ -30,6 +30,13 @@
 .featured-article{border-color:var(--article-border,var(--line));background:var(--article-bg,#fff)}
 .article-compact{display:flex;flex-direction:column;gap:0;align-items:stretch;border-color:var(--article-border,var(--line));background:var(--article-bg,#fff)}.article-compact-body{display:flex;flex:1;flex-direction:column;width:100%}
 .article-tone-market{--article-bg:#f6f9ff;--article-border:#dfe8f6;--article-accent:#2f6fcb}.article-tone-method{--article-bg:#fffaf2;--article-border:#efe4d2;--article-accent:#a16f2f}.article-tone-tool{--article-bg:#f5fbf8;--article-border:#dcece4;--article-accent:#31785b}.article-tone-ai{--article-bg:#f8f7fd;--article-border:#e5e1f1;--article-accent:#6b5d99}.article-tone-default{--article-bg:#f8fafc;--article-border:#e1e7ef;--article-accent:#54708f}
+
+/* Shared brand artwork: one optimized raster mark across site, PWA and favicon surfaces. */
+.brand-logo{width:43px;height:43px;display:block;object-fit:cover;border-radius:11px;flex-shrink:0}
+.about-emblem,.about-brand-logo{display:block;object-fit:cover;background:#fff}
+.about-emblem{padding:0;overflow:hidden}
+.about-brand-logo{width:65px;height:65px;border-radius:16px;margin-bottom:20px}
+@media(max-width:650px){.brand-logo{width:36px;height:36px;border-radius:9px}.about-brand-logo{width:52px;height:52px;border-radius:13px;margin-bottom:15px}}
 .featured-article .content-meta .category,.article-compact .content-meta .category{color:var(--article-accent,var(--blue))}.article-compact .article-foot{margin-top:auto;padding-top:13px}.article-home-grid{align-items:start}.article-home-grid>.featured-article .article-foot{margin-top:auto;padding-top:24px}
 @media(max-width:850px){.article-compact{padding:18px}}
 @media(max-width:650px){.article-compact{padding:15px;align-items:stretch}.article-compact>div:not(.cover){padding:0}}

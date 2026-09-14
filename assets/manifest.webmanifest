@@ -1,0 +1,31 @@
+{
+  "name": "老赵市场笔记",
+  "short_name": "市场笔记",
+  "description": "记录市场的四季，分享投资的方法与 AI 实践。",
+  "lang": "zh-CN",
+  "start_url": "../index.html",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#f7f4ee",
+  "theme_color": "#142741",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
