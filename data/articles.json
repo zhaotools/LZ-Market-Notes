@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-09-14T18:39:02.049Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 35 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-09-15T07:39:07.829Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 36 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-3499be28f3a2",
+      "category": "市场观察",
+      "title": "别太早拒绝新事物，保持好奇心",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-09-15",
+      "theme": "market",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484196&idx=1&sn=6e24b3e13efb640e041976fa7e05e46e&chksm=f0a014dac7d79dcc8f10bc7928c870018335974036fec9873cbbd19522eb289320ea05816ad1",
+      "status": "published"
+    },
     {
       "id": "wechat-c5d59968950d",
       "category": "投资方法",
