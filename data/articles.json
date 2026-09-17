@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-09-16T07:37:47.267Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 37 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-09-17T07:34:21.276Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 38 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-9daf38be0dbd",
+      "category": "市场观察",
+      "title": "一本神奇的书：高性价比人生指南",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-09-17",
+      "theme": "market",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484225&idx=1&sn=a94b0416ef7709291306966b6be746c8&chksm=f0a014bfc7d79da98d43233a9e568c3a282564c87d8e727651b1e1ca8d39bf4c5b783aea3eeb",
+      "status": "published"
+    },
     {
       "id": "wechat-ca5862461346",
       "category": "AI 实践",
