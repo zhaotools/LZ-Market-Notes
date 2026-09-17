@@ -14,6 +14,7 @@ const current={site:await readJSON('site.json'),articles:await readJSON('article
 const marketLiveSource=await readFile(resolve(root,'assets/market-live.js'),'utf8');
 const siteSource=await readFile(resolve(root,'assets/site.js'),'utf8');
 const stylesSource=await readFile(resolve(root,'assets/styles.css'),'utf8');
+const workflowSource=await readFile(resolve(root,'.github/workflows/pages.yml'),'utf8');
 const marketLiveContext=vm.createContext({URL,Date,AbortController,setTimeout,clearTimeout});
 new vm.Script(marketLiveSource).runInContext(marketLiveContext);
 const marketLive=marketLiveContext.LZMarketLive;
@@ -98,6 +99,16 @@ test('optimized brand artwork is wired to site, PWA, Apple and favicon surfaces'
  for(const path of ['assets/logo.png','assets/favicon.ico','assets/favicon-32.png','assets/apple-touch-icon.png','assets/manifest.webmanifest'])assert.ok(html.includes(path));
  assert.ok(renderers.index(current).includes('class="about-emblem" src="assets/logo.png"'));
  assert.ok(renderers.about(current).includes('class="about-brand-logo" src="assets/logo.png"'));
+});
+test('scheduled source failures are isolated and the optional YouTube API secret is wired',()=>{
+ for(const name of ['Synchronize YouTube videos','Synchronize market snapshot','Synchronize WeChat articles']){
+  const start=workflowSource.indexOf(`- name: ${name}`),next=workflowSource.indexOf('\n      - name:',start+1),step=workflowSource.slice(start,next===-1?undefined:next);
+  assert.ok(start>=0,`${name} step should exist`);assert.ok(step.includes('continue-on-error: true'),`${name} should not block other sources`);
+ }
+ assert.ok(workflowSource.includes('YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}'));
+ assert.ok(workflowSource.includes('Report synchronization warnings'));
+ assert.ok(workflowSource.indexOf('Synchronize YouTube videos')<workflowSource.indexOf('Synchronize market snapshot'));
+ assert.ok(workflowSource.indexOf('Synchronize market snapshot')<workflowSource.indexOf('Synchronize WeChat articles'));
 });
 test('article cards omit decorative covers and use subtle category tones',()=>{
  const homeHTML=renderers.index(data),articleHTML=renderers.articles(data);

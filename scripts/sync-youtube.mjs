@@ -258,8 +258,9 @@ async function syncYoutubeAPI(site,previous,key){
  }
  if(!items.length)throw new Error('No usable public videos; existing data preserved.');
  items.sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt));
+ const latestItems=items.slice(0,5);
  const next={schemaVersion:1,status:'synced-public-directory',lastSyncedAt:new Date().toISOString(),channelId:info.id,
-  channelTitle:info.snippet?.title||null,note:'通过 YouTube Data API 同步公开视频。分类是可编辑的规则归类，不是 YouTube 官方分类。',items};
+  channelTitle:info.snippet?.title||null,note:'通过 YouTube Data API 同步最近 5 条公开视频。分类是可编辑的规则归类，不是 YouTube 官方分类。',items:latestItems};
  validateContent(next,'videos');
  if(JSON.stringify(previous)===JSON.stringify({...next,lastSyncedAt:previous.lastSyncedAt})){
   console.log('YouTube public directory is unchanged.');return {changed:false};
@@ -270,6 +271,11 @@ async function syncYoutubeAPI(site,previous,key){
 }
 export async function syncYoutube(){
  const site=await readJSON('site.json'),previous=await readJSON('videos.json'),key=process.env.YOUTUBE_API_KEY;
- return key?syncYoutubeAPI(site,previous,key):syncYoutubeRSS(site,previous);
+ if(!key)return syncYoutubeRSS(site,previous);
+ try{return await syncYoutubeAPI(site,previous,key);}
+ catch(error){
+  console.warn(`${error.message} Falling back to YouTube RSS and the verified public channel page.`);
+  return syncYoutubeRSS(site,previous);
+ }
 }
 if(process.argv[1]&&resolve(process.argv[1])===resolve(import.meta.filename))syncYoutube().catch(err=>{console.error(err.message);process.exitCode=1;});

@@ -26,12 +26,46 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
-      - name: Synchronize public content sources
+      - name: Synchronize YouTube videos
+        id: sync_youtube
         if: github.event_name != 'push'
+        continue-on-error: true
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: npm run sync:youtube
+      - name: Synchronize market snapshot
+        id: sync_market
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: npm run sync:market
+      - name: Synchronize WeChat articles
+        id: sync_wechat
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: npm run sync:wechat
+      - name: Report synchronization warnings
+        if: always() && github.event_name != 'push'
+        env:
+          YOUTUBE_RESULT: ${{ steps.sync_youtube.outcome }}
+          MARKET_RESULT: ${{ steps.sync_market.outcome }}
+          WECHAT_RESULT: ${{ steps.sync_wechat.outcome }}
         run: |
-          npm run sync:youtube
-          npm run sync:market
-          npm run sync:wechat
+          echo "### Public content synchronization" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Source | Result |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| YouTube | $YOUTUBE_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| LZ-Map | $MARKET_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| WeChat | $WECHAT_RESULT |" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$YOUTUBE_RESULT" != "success" ]; then
+            echo "::warning title=YouTube synchronization failed::Verified existing video data was preserved; Map and WeChat synchronization continued."
+          fi
+          if [ "$MARKET_RESULT" != "success" ]; then
+            echo "::warning title=Market synchronization failed::Verified existing market data was preserved; other sources continued."
+          fi
+          if [ "$WECHAT_RESULT" != "success" ]; then
+            echo "::warning title=WeChat synchronization failed::Verified existing article data was preserved; other sources continued."
+          fi
       - name: Build static files
         run: npm run build
       - name: Run data and template tests
