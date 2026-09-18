@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-09-17T07:34:21.276Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 38 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-09-18T05:56:40.302Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 39 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-56181bd72cf6",
+      "category": "市场观察",
+      "title": "电动汽车新物种：第三空间",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-09-18",
+      "theme": "market",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484247&idx=1&sn=6d28762885b592051e234f6e1cf6c37c&chksm=f0a014a9c7d79dbf16397ceeabf065cfd5bae9483cb8763ac226354a96923c68e9eebfe4b8ca",
+      "status": "published"
+    },
     {
       "id": "wechat-9daf38be0dbd",
       "category": "市场观察",
