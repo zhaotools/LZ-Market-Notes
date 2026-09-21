@@ -1,9 +1,9 @@
 {
   "schemaVersion": "lz-notes-public-market-v1",
   "snapshotType": "public-snapshot",
-  "generatedAt": "2026-09-19T00:08:42.775Z",
-  "syncedAt": "2026-09-19T05:54:34.827Z",
-  "commonStageAsOf": "2026-09-07",
+  "generatedAt": "2026-09-21T04:06:01.638Z",
+  "syncedAt": "2026-09-21T06:23:07.069Z",
+  "commonStageAsOf": "2026-09-14",
   "analysisPeriod": "weekly-completed-bars",
   "sourceUrl": "https://zhaotools.github.io/LZ-4Stage-Map/data/dashboard.json",
   "sourceBlobSha": null,
@@ -71,7 +71,7 @@
       "stageDetail": "正常下降",
       "observationStage": "S4",
       "stageAsOf": "2026-09-18",
-      "marketAsOf": "2026-09-18",
+      "marketAsOf": "2026-09-21",
       "completedThrough": null,
       "collections": [
         "global"
@@ -88,7 +88,7 @@
       "stageDetail": "下降减速",
       "observationStage": "S4",
       "stageAsOf": "2026-09-18",
-      "marketAsOf": "2026-09-18",
+      "marketAsOf": "2026-09-21",
       "completedThrough": null,
       "collections": [
         "global"
@@ -203,12 +203,12 @@
       "region": "加密",
       "stage": "S2",
       "subStage": "S2",
-      "weeks": 2,
+      "weeks": 3,
       "stageDetail": "正常推进",
       "observationStage": "S2",
-      "stageAsOf": "2026-09-07",
-      "marketAsOf": "2026-09-07",
-      "completedThrough": "2026-09-13",
+      "stageAsOf": "2026-09-14",
+      "marketAsOf": "2026-09-14",
+      "completedThrough": "2026-09-20",
       "collections": [
         "global"
       ]
@@ -220,12 +220,12 @@
       "region": "加密",
       "stage": "S2",
       "subStage": "S2",
-      "weeks": 2,
+      "weeks": 3,
       "stageDetail": "正常推进",
       "observationStage": "S2",
-      "stageAsOf": "2026-09-07",
-      "marketAsOf": "2026-09-07",
-      "completedThrough": "2026-09-13",
+      "stageAsOf": "2026-09-14",
+      "marketAsOf": "2026-09-14",
+      "completedThrough": "2026-09-20",
       "collections": [
         "global"
       ]
@@ -258,7 +258,7 @@
       "stageDetail": "筑底阶段",
       "observationStage": "S1",
       "stageAsOf": "2026-09-18",
-      "marketAsOf": "2026-09-18",
+      "marketAsOf": "2026-09-21",
       "completedThrough": null,
       "collections": [
         "global"
@@ -275,7 +275,7 @@
       "stageDetail": "正常下降",
       "observationStage": "S4",
       "stageAsOf": "2026-09-18",
-      "marketAsOf": "2026-09-18",
+      "marketAsOf": "2026-09-21",
       "completedThrough": null,
       "collections": [
         "global"
@@ -286,9 +286,9 @@
     "schemaVersion": "lz-market-interpretation-v2",
     "viewKey": "global",
     "mode": "system",
-    "generatedAt": "2026-09-19T00:08:42.775Z",
-    "commonStageAsOf": "2026-09-07",
-    "sourceSnapshotSha256": "39f3423388e6f362517234242f4facb7834cd42efb2f08e33145de61e974790b",
+    "generatedAt": "2026-09-21T04:06:01.638Z",
+    "commonStageAsOf": "2026-09-14",
+    "sourceSnapshotSha256": "5ffb000ad1682ca3108479653f412c1d2eda9989047a6ab832bde4037282d260",
     "universeSize": 16,
     "analyzedSize": 16,
     "excludedSize": 0,
