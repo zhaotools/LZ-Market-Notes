@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-09-21T06:23:07.237Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 40 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-09-22T06:16:08.001Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 41 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-9b2ce8395062",
+      "category": "市场观察",
+      "title": "旧世界与新时代",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-09-22",
+      "theme": "market",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484276&idx=1&sn=4f37d43b688bfd9cc7d4d7a0a226f557&chksm=f0a0148ac7d79d9c3bc253df4ab83bc4aabdae509b32ad24eb4209fb3af10fe94888882cc43d",
+      "status": "published"
+    },
     {
       "id": "wechat-dc155855d7ec",
       "category": "投资方法",
