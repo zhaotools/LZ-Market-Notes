@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-09-22T06:16:08.001Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 41 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-09-23T05:59:55.819Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 42 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-46e49e08ae79",
+      "category": "AI 实践",
+      "title": "机器原生经济：当 AI 开始拥有钱包、支付和资产",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-09-23",
+      "theme": "coding",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484290&idx=1&sn=6baa1e7a9ac1fabbef587a32f43e3927&chksm=f0a0147cc7d79d6a0aa0c106aa978c436f01dd32b52ba1494ef293bac3c8190064aaa49704d0",
+      "status": "published"
+    },
     {
       "id": "wechat-9b2ce8395062",
       "category": "市场观察",
