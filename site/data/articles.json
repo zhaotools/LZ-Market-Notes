@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-09-23T05:59:55.819Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 42 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-09-26T06:10:57.134Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 43 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-92c5f1f37bbf",
+      "category": "AI 实践",
+      "title": "迎接AI时代的到来，第一步，安装语音输入法",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-09-26",
+      "theme": "coding",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484299&idx=1&sn=8c3ac9703e0f5343eb4c26a82c6de1b7&chksm=f0a01475c7d79d6323f070d7dab13b13fcb21e978265e2835bd3e54fdf0d364ca3a342113121",
+      "status": "published"
+    },
     {
       "id": "wechat-46e49e08ae79",
       "category": "AI 实践",
