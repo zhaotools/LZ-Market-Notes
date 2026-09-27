@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-09-27T06:38:13.035Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 44 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-09-27T08:02:38.339Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 45 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
     {
       "id": "wechat-33ab46c749eb",
@@ -14,6 +14,18 @@
       "tags": [],
       "featured": false,
       "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484305&idx=1&sn=8b5050d54814345e7c36872ff5f80ab5&chksm=f0a0146fc7d79d79c731dbd70014ed78ad689cab900c977a762557c2d070e766c2a73e8ae677",
+      "status": "published"
+    },
+    {
+      "id": "wechat-6052a5a84954",
+      "category": "市场观察",
+      "title": "Crypto 的 iPhone 时刻",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-09-27",
+      "theme": "market",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484314&idx=1&sn=e4e8f29c16639ef3d84dd4e136e8b3a2&chksm=f0a01464c7d79d72dd4d856097d976029585958f936e3e9dced4e034a342f6ff43cfdaf67293",
       "status": "published"
     },
     {

@@ -1,12 +1,28 @@
 {
   "schemaVersion": 1,
   "status": "synced-public-rss",
-  "lastSyncedAt": "2026-09-14T07:49:20.645Z",
+  "lastSyncedAt": "2026-09-27T08:02:37.605Z",
   "channelId": "UCSk0Q0f1xvfyRQCxiFlfNWg",
   "channelTitle": "老赵市场观察",
   "sourceUrl": "https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg",
   "note": "通过 YouTube 官方公开 RSS 同步最近公开视频。RSS 不提供完整历史、时长或嵌入权限；配置 Data API 密钥后可同步完整公开视频目录并核验这些字段。",
   "items": [
+    {
+      "id": "5As4hvDpOrI",
+      "youtubeId": "5As4hvDpOrI",
+      "title": "BTC 趋势分析｜2026-09-26",
+      "summary": "BTC 技术分析： 1、周线趋势分析 2、日线状态解读 3、仓位管理",
+      "category": "市场观察",
+      "editorialCategory": null,
+      "coverTitle": "BTC 趋势分析｜2026-09-26",
+      "theme": "cross",
+      "url": "https://www.youtube.com/watch?v=5As4hvDpOrI",
+      "thumbnail": "https://i.ytimg.com/vi/5As4hvDpOrI/hqdefault.jpg",
+      "publishedAt": "2026-09-27T01:26:59+00:00",
+      "duration": null,
+      "embeddable": null,
+      "status": "published"
+    },
     {
       "id": "5tCdHTzcB7A",
       "youtubeId": "5tCdHTzcB7A",
@@ -67,22 +83,6 @@
       "url": "https://www.youtube.com/watch?v=OdzO84ToAlM",
       "thumbnail": "https://i.ytimg.com/vi/OdzO84ToAlM/hqdefault.jpg",
       "publishedAt": "2026-09-10T07:31:57+00:00",
-      "duration": null,
-      "embeddable": null,
-      "status": "published"
-    },
-    {
-      "id": "u1spsYnufV8",
-      "youtubeId": "u1spsYnufV8",
-      "title": "BTC进入S2夏季，牛市启动｜2026-09-07",
-      "summary": "BTC进入S2夏季，牛市启动。",
-      "category": "市场观察",
-      "editorialCategory": null,
-      "coverTitle": "BTC进入S2夏季，牛市启动｜2026-09-07",
-      "theme": "cross",
-      "url": "https://www.youtube.com/watch?v=u1spsYnufV8",
-      "thumbnail": "https://i.ytimg.com/vi/u1spsYnufV8/hqdefault.jpg",
-      "publishedAt": "2026-09-10T06:23:39+00:00",
       "duration": null,
       "embeddable": null,
       "status": "published"
