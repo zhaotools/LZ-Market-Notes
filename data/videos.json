@@ -1,12 +1,28 @@
 {
   "schemaVersion": 1,
   "status": "synced-public-rss",
-  "lastSyncedAt": "2026-09-27T08:02:37.605Z",
+  "lastSyncedAt": "2026-10-02T07:01:02.075Z",
   "channelId": "UCSk0Q0f1xvfyRQCxiFlfNWg",
   "channelTitle": "老赵市场观察",
   "sourceUrl": "https://www.youtube.com/feeds/videos.xml?channel_id=UCSk0Q0f1xvfyRQCxiFlfNWg",
   "note": "通过 YouTube 官方公开 RSS 同步最近公开视频。RSS 不提供完整历史、时长或嵌入权限；配置 Data API 密钥后可同步完整公开视频目录并核验这些字段。",
   "items": [
+    {
+      "id": "73yY18FkLoo",
+      "youtubeId": "73yY18FkLoo",
+      "title": "2026 加密新叙事解读｜老赵市场观察",
+      "summary": "1、加密叙事轮回：基本面山寨 2、山寨投资回报数据分析 3、加密技术分析",
+      "category": "市场观察",
+      "editorialCategory": null,
+      "coverTitle": "2026 加密新叙事解读｜老赵市场观察",
+      "theme": "cross",
+      "url": "https://www.youtube.com/watch?v=73yY18FkLoo",
+      "thumbnail": "https://i.ytimg.com/vi/73yY18FkLoo/hqdefault.jpg",
+      "publishedAt": "2026-10-02T03:20:34+00:00",
+      "duration": null,
+      "embeddable": null,
+      "status": "published"
+    },
     {
       "id": "5As4hvDpOrI",
       "youtubeId": "5As4hvDpOrI",
@@ -67,22 +83,6 @@
       "url": "https://www.youtube.com/watch?v=OKxgjpSEEqg",
       "thumbnail": "https://i.ytimg.com/vi/OKxgjpSEEqg/hqdefault.jpg",
       "publishedAt": "2026-09-10T18:58:28+00:00",
-      "duration": null,
-      "embeddable": null,
-      "status": "published"
-    },
-    {
-      "id": "OdzO84ToAlM",
-      "youtubeId": "OdzO84ToAlM",
-      "title": "比特币黄金交叉 注意短期回调 2026-09-09",
-      "summary": "比特币黄金交叉，注意短期回调 2026-09-09",
-      "category": "市场观察",
-      "editorialCategory": null,
-      "coverTitle": "比特币黄金交叉 注意短期回调 2026-09-09",
-      "theme": "cross",
-      "url": "https://www.youtube.com/watch?v=OdzO84ToAlM",
-      "thumbnail": "https://i.ytimg.com/vi/OdzO84ToAlM/hqdefault.jpg",
-      "publishedAt": "2026-09-10T07:31:57+00:00",
       "duration": null,
       "embeddable": null,
       "status": "published"
