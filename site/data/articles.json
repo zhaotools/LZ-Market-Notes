@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-10-03T08:00:07.225Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 47 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-10-04T06:50:45.037Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 48 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-5090158fe151",
+      "category": "市场观察",
+      "title": "未来五年，一切都会被重写",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-10-04",
+      "theme": "market",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484347&idx=1&sn=0b96e7451da6a4d38046f935d27f437b&chksm=f0a01445c7d79d5317694635bd321275440948242a379b68f8b7a12ed899b70c0a2163bb762b",
+      "status": "published"
+    },
     {
       "id": "wechat-f02bab8a2442",
       "category": "投资方法",
