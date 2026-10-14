@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-10-10T07:09:23.682Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 50 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-10-14T06:10:04.929Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 51 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-faf7a20a5ef2",
+      "category": "工具使用",
+      "title": "两套系统，满足大部分投资场景，接下来做什么",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-10-14",
+      "theme": "toolkit",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484391&idx=1&sn=d1d8901de395be08c37e2907921fc577&chksm=f0a01419c7d79d0fb1ed14a6672ece0a3588c29178d160baa8c135bbdaeeaf1a0278386eaeca",
+      "status": "published"
+    },
     {
       "id": "wechat-d1974d18179e",
       "category": "市场观察",
