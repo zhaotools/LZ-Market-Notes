@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-10-14T06:10:04.929Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 51 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-10-16T05:53:21.516Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 52 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-bdae5c15e419",
+      "category": "市场观察",
+      "title": "我眼里最值得长期观察的四类资产",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-10-16",
+      "theme": "market",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484400&idx=1&sn=070a7b58f3b17043c2b57b4ebaabdf92&chksm=f0a0140ec7d79d1874f31887e6115fd3d85e3d9f9c731e617a41b42443cd497b8842f1a7266f",
+      "status": "published"
+    },
     {
       "id": "wechat-faf7a20a5ef2",
       "category": "工具使用",
