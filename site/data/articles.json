@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-10-16T05:53:21.516Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 52 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-10-17T05:37:19.703Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 53 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-0a96a7ca84be",
+      "category": "市场观察",
+      "title": "老赵市场观察周报｜2026·W42",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-10-17",
+      "theme": "market",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484407&idx=1&sn=c0e37d790590d3e0aa945f18ab8789c2&chksm=f0a01409c7d79d1f21379fcbd065490b419f8ab6a29f4dea85b6e5e04c321a608caa9b3d6295",
+      "status": "published"
+    },
     {
       "id": "wechat-bdae5c15e419",
       "category": "市场观察",
