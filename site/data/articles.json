@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-10-24T05:56:01.122Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 54 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-10-25T17:03:45.662Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 55 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-273dfac7ba97",
+      "category": "AI 实践",
+      "title": "AI 吞噬一切",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-10-25",
+      "theme": "coding",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484416&idx=1&sn=b62731e1477c10d575a53ccb1f5c53ed&chksm=f0a013fec7d79ae873c081742ecc554d3717584f82137c92cbf3ddadab3d2d30e2c8de3f9871",
+      "status": "published"
+    },
     {
       "id": "wechat-42e19ba1ba40",
       "category": "市场观察",
