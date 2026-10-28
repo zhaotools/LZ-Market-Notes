@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-10-25T17:03:45.662Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 55 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-10-28T06:52:32.544Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 56 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-9b672d929e9a",
+      "category": "AI 实践",
+      "title": "AI向左，BTC向右",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-10-28",
+      "theme": "coding",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484422&idx=1&sn=669f8b1bdb98533fc9fddc83d262a976&chksm=f0a013f8c7d79aee7d3fb4bf056f1b3c46c7861e7ae4e704c6db3fd1f4ef83e962edda8af354",
+      "status": "published"
+    },
     {
       "id": "wechat-273dfac7ba97",
       "category": "AI 实践",
