@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-10-28T06:52:32.544Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 56 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-10-31T07:00:07.517Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 57 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-c6154ca55f4c",
+      "category": "市场观察",
+      "title": "老赵市场观察周报｜2026 W44周",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-10-31",
+      "theme": "market",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484427&idx=1&sn=1f53ae8c7f4f3276e3e8149b3a9fad32&chksm=f0a013f5c7d79ae388901d04a8119f3fb4f92dc188caf5f82e2afac6136de0b174965712cbe5",
+      "status": "published"
+    },
     {
       "id": "wechat-9b672d929e9a",
       "category": "AI 实践",
