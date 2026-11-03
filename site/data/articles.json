@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-10-31T07:00:07.517Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 57 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-11-03T20:06:44.403Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 58 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-f9f5275b63cd",
+      "category": "AI 实践",
+      "title": "AI 市场观察｜持续跟踪第3篇",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-11-03",
+      "theme": "coding",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484455&idx=1&sn=948d68d44f73adb4f69195ad56fba9a9&chksm=f0a013d9c7d79acf010a5af4ffb7d21f20669b2dd6c089b0557ca8018cd7ea07dfab2b4bb8b6",
+      "status": "published"
+    },
     {
       "id": "wechat-c6154ca55f4c",
       "category": "市场观察",
