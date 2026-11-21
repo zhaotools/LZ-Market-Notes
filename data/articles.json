@@ -1,9 +1,21 @@
 {
   "schemaVersion": 1,
   "status": "synced-wechat-album",
-  "lastImportedAt": "2026-11-18T08:33:26.092Z",
-  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 63 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
+  "lastImportedAt": "2026-11-21T08:17:28.702Z",
+  "note": "通过公开合集自动同步「老赵市场笔记」文章目录；合集当前公开 64 篇，只保存标题、目录摘要、日期和公众号原文链接，不复制正文。",
   "items": [
+    {
+      "id": "wechat-034c9c33a644",
+      "category": "投资方法",
+      "title": "趋势周报｜老赵观察 2026-11-21",
+      "summary": "来自「老赵市场笔记」的原创文章。",
+      "date": "2026-11-21",
+      "theme": "method",
+      "tags": [],
+      "featured": false,
+      "url": "https://mp.weixin.qq.com/s?__biz=MzYzNDI3NDQ0OQ==&mid=2247484519&idx=1&sn=7825ed6def37e47db07457054f8cc01b&chksm=f0a01399c7d79a8faf102adb19279e4771d33877b00b48398767a1c982c4ec214bbf3a712539",
+      "status": "published"
+    },
     {
       "id": "wechat-30d88b696347",
       "category": "市场观察",
